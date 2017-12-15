@@ -1,0 +1,75 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card md-theme-watch>
+                <h3 class="text-center">{{msg}}</h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <h2 class="cauto">{{title}}</h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding class="overfl" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.id,'Report ID')"></p>
+                    <p ng-bind-html="view(data.in_time,'Log In AT')"></p>
+                    <p ng-bind-html="view(data.out_time,'Log Out AT')"></p>
+                    <p ng-bind-html="view(attendance_type[data.attent_type],'Attendance Type')"></p>
+
+                </div>
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.user_id,'Employee')"></p>
+                    <p ng-bind-html="view(data.leave_desc,'Leave Info')"></p>
+                   
+                    </p>
+                </div>
+       
+
+                <div class="col-md-12 " ng-if="map">
+                    <hr>
+                    <h5>Log in  Map</h5>
+                    <div class="col-md-12 gmmap">
+                        <gm-map ng-if="map" options="{center: [data.login_lat, data.login_lon], zoom: 12}">
+                            <gm-marker options="{position:[data.login_lat, data.login_lon],draggable: false}">
+                            </gm-marker>
+                        </gm-map>
+                    </div>
+                </div>
+                 <div class="col-md-12 " ng-if="map1">
+                    <hr>
+                    <h5>Log out  Map</h5>
+                    <div class="col-md-12 gmmap">
+                        <gm-map ng-if="map" options="{center: [data.logout_lat, data.logout_lon], zoom: 12}">
+                            <gm-marker options="{position:[data.logout_lat, data.logout_lon],draggable: false}">
+                            </gm-marker>
+                        </gm-map>
+                    </div>
+                </div>
+
+            </div>
+        </md-content>
+        </div>
+    </article>
+</section>

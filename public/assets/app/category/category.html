@@ -1,0 +1,146 @@
+<section class="container-fluid with-maxwidth chapter">
+    <div class="box-body">
+        <div class="col-md-12 nopad" ng-show="showform">
+            <div class="right actionbtn">
+                <md-button type="button" ng-click="submit_form()" class="md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                <md-button type="button" ng-click="closeform()" class="md-raised btn-w-md md-primary">Close</md-button>
+            </div>
+        </div>
+        <div class="col-md-12 nopad" ng-hide="showform">
+            <div class="right addbtn">
+                <md-button class="md-raised btn-w-md md-accent" ng-click="addbtn()">Add {{title}}</md-button>
+            </div>
+        </div>
+    </div>
+    <article class="article" ng-show="showform">
+        <div class="box box-default">
+            <div class="box-body form-validation">
+                <form name="data_form" unsaved-warning-form class="md-form-login form-validation" novalidate>
+                  
+                     <div class="col-md-6">
+                        <md-input-container class="md-block">
+                            <label>Name </label>
+                            <input ng-model="data.name" required type="text">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-6">
+                        <md-input-container class="md-block">
+                            <label>Desc </label>
+                            <input type="text" required ng-model="data.desc">
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr>
+                        <md-button type="button" data-ng-click="closeform()" class="md-raised right wid btn-w-md md-primary">Close</md-button>
+                        <md-button type="button" ng-click="submit_form()" class="right wid md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+    <md-card>
+        <md-content layout="column" flex>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+                <div class="md-toolbar-tools">
+                    <span>{{title}} Info </span>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="resettable()">
+                        <md-tooltip>
+                            Refresh
+                        </md-tooltip>
+                        <md-icon>refresh</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="activefilter=!activefilter;showsearch = false">
+                        <md-tooltip>
+                            Filters
+                        </md-tooltip>
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="showsearch = !showsearch;activefilter = false">
+                        <md-tooltip>
+                            Search
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="showsearch" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <form class="flex">
+                        <md-input-container class="md-block" flex=100>
+                            <input ng-model="searchFish" placeholder="Search" class="searchmrg">
+                        </md-input-container>
+                    </form>
+                </div>
+            </md-toolbar>
+            <md-whiteframe layout="row" ng-repeat="single in multisearch" ng-show="activefilter">
+                <div class="md-toolbar-tools mrg1">
+                    <md-input-container flex=40>
+                        <label>Column</label>
+                        <md-select ng-model="single.column" ng-change="updateDataTable()">
+                            <md-optgroup label="Column">
+                                <md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block searchmrg" flex=40>
+                        <label>Search</label>
+                        <input ng-change="updateDataTable()" ng-model="single.ident">
+                    </md-input-container>
+                    <md-button type="button" class="md-raised right wid btn-w-md md-warn h40" ng-click="deleteRow(single.id)" ng-disabled="multisearch.length == 1">
+                        <md-tooltip>
+                            Remove Filter
+                        </md-tooltip>
+                        Remove
+                    </md-button>
+                    <md-button class="md-raised right wid btn-w-md md-primary h40" ng-click="addRow()">
+                        <md-tooltip>
+                            Add Filter
+                        </md-tooltip>
+                        Add
+                    </md-button>
+                </div>
+            </md-whiteframe>
+            <md-table-container>
+                <table md-table>
+                    <md-progress-linear md-mode="indeterminate" ng-show="!wwstatus"></md-progress-linear>
+                    <thead md-head md-order="query.order">
+                        <tr md-row>
+                            <th md-column ng-repeat="column in autocolumn" md-order-by="{{column.name}}">
+                                <span>{{column.display}}</span>
+                            </th>
+                           
+                            <th md-column>
+                                <span>Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="row" md-select-id="name" md-auto-select ng-repeat="vim in datatable.data |filter : searchFish | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                            <td md-cell>{{vim.name}}</td>
+                            <td md-cell>{{vim.desc}}</td>
+                     
+                            <td md-cell>
+                                <md-button class="md-icon-button md-primary" data-ng-click="update_info(vim.id)" aria-label="mode_edit">
+                                  <md-tooltip>
+                            Edit
+                        </md-tooltip>
+                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                </md-button>
+                              
+                                <md-button class="md-icon-button  md-warn" data-ng-click="delete(vim.id)" aria-label="delete_forever">
+                                  <md-tooltip>
+                            Delete
+                        </md-tooltip>
+                                    <md-icon class="material-icons">delete_forever</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{datatable.data.length}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+        </md-content>
+    </md-card>
+</section>

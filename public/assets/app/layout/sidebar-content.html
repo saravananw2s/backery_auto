@@ -1,0 +1,119 @@
+<ul class="nav" data-accordion-nav data-slim-scroll data-highlight-active data-append-sub-menu-icon>
+ <!--    <li class="nav-header" permission permission-only="'SUPERADMIN'"><span>Admin </span></li>
+    <li>
+        <a md-button aria-label="menu" ui-sref="admin.dashboard" permission permission-only="'SUPERADMIN'">
+            <i class="nav-icon material-icons">home</i><span class="nav-text">Admin DASHBOARD</span></a>
+    </li>
+    <li permission permission-only="'SUPERADMIN'"><a md-button aria-label="menu" ui-sref="admin.company"><i class="nav-icon material-icons">work</i><span class="nav-text" >COMPANY</span></a></li>
+    <li class="nav-divider" permission permission-only="'SUPERADMIN'"></li>
+    <li class="nav-header" ng-if="show_menu" permission permission-only="'SUPERADMIN'"><span>COMPANY </span></li>
+    <li ng-if="show_menu">
+        <a md-button aria-label="menu" ui-sref="admin.company_dashboard">
+            <i class="nav-icon material-icons">dashboard</i><span class="nav-text">DASHBOARD</span></a>
+    </li> -->
+
+
+        <li ng-if="show_menu">
+        <a md-button aria-label="menu" ui-sref="admin.company_dashboard" id='dashboard-link' data-ui-sref-opts="{reload: true}">
+            <i class="nav-icon material-icons">dashboard</i><span class="nav-text">DASHBOARD</span></a>
+    </li>
+    <li ng-if="show_menu"><a id='employee-link' md-button aria-label="menu" ui-sref="admin.user" permission permission-only="['SUPERADMIN','ADMIN','MANAGER']"><i class="nav-icon material-icons">supervisor_account</i><span class="nav-text" >Employee</span></a></li>
+    <!--    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.attandance"><i class="nav-icon material-icons">alarm</i><span class="nav-text" >Attendance</span></a></li>
+ -->
+    <li ng-if="show_menu"> <a md-button aria-label="menu" ui-sref="admin.customer" id='customer-link'><i class="nav-icon material-icons">folder</i><span class="nav-text" >CUSTOMER</span></a></li>
+
+<!--
+     <li ng-if="show_menu"> <a md-button aria-label="menu" ui-sref="admin.customer-stats"><i class="nav-icon material-icons">folder</i><span class="nav-text">CUSTOMER STATS</span></a></li>
+
+ -->
+
+ <!--          <li ng-if="show_menu">
+      <a md-button aria-label="menu" href=""><i class="nav-icon material-icons">shopping_cart</i><span class="nav-text">Orders  </span><i class="nav-icon material-icons icmr8">ic_keyboard_arrow_down</i></a>
+      <ul>
+         <li><a md-button aria-label="menu" ui-sref="admin.order"><i class="nav-icon material-icons">class</i><span class="nav-text" >Orders Report</span></a></li>
+
+          <li><a md-button aria-label="menu" ui-sref="admin.product"><i class="nav-icon material-icons">view_list</i><span class="nav-text" >Product</span></a></li>
+
+                  <li><a md-button aria-label="menu" ui-sref="admin.category"><i class="nav-icon material-icons">view_list</i><span class="nav-text" >Category</span></a></li>
+
+
+
+
+      </ul>
+   </li> -->
+
+
+   <!--  <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.new-schedule"><i class="nav-icon material-icons">event</i><span class="nav-text" >Delivery Schedule</span></a></li> -->
+<!--     <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.new-schedule"><i class="nav-icon material-icons">event</i><span class="nav-text" >Beta Schedule</span></a></li> -->
+<!--     <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.visit"><i class="nav-icon material-icons">class</i><span class="nav-text" >CUSTOMER Analysis </span></a></li>
+
+    <li ng-if="show_menu">
+        <a md-button aria-label="menu" ui-sref="admin.caseinfo"><i class="nav-icon material-icons">class</i><span class="nav-text" >Case / Complaints </span></a></li>
+
+
+
+
+
+
+       <li ng-if="show_menu">
+      <a md-button aria-label="menu" href=""><i class="nav-icon material-icons">note</i><span class="nav-text">Reports </span> <i class="nav-icon material-icons icmr4 ">ic_keyboard_arrow_down</i> </a>
+      <ul>
+   <li ><a md-button aria-label="menu" ui-sref="admin.requestinfo"><i class="nav-icon material-icons">class</i><span class="nav-text" >Request Info </span></a></li>
+   <li><a md-button aria-label="menu" ui-sref="admin.caseinfo"><i class="nav-icon material-icons">class</i><span class="nav-text" >Case Info </span></a></li>
+         <li ><a md-button aria-label="menu" ui-sref="admin.visit"><i class="nav-icon material-icons">class</i><span class="nav-text" >Visit Report </span></a></li>
+   <li><a md-button aria-label="menu" ui-sref="admin.market"><i class="nav-icon material-icons">class</i><span class="nav-text" >Market Report</span></a></li>
+      <li><a md-button aria-label="menu" ui-sref="admin.travelexpense"><i class="nav-icon material-icons">account_balance_wallet</i><span class="nav-text" >Travel Expense</span></a></li>
+   <li><a md-button aria-label="menu" ui-sref="admin.newprojectopp"><i class="nav-icon material-icons">class</i><span class="nav-text" >Lead Opportunity</span></a></li>
+
+
+
+    </ul>
+   </li> -->
+
+    <!--    <li ng-if="show_menu">
+      <a md-button aria-label="menu" href=""><i class="nav-icon material-icons">perm_media</i><span class="nav-text">List Item  </span><i class="nav-icon material-icons icmr2">ic_keyboard_arrow_down</i></a>
+      <ul>
+         <li><a md-button aria-label="menu" ui-sref="admin.competitor"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Competitor </span></a></li>
+         <li><a md-button aria-label="menu" ui-sref="admin.customer"><i class="nav-icon material-icons">folder</i><span class="nav-text">CUSTOMER</span></a></li>
+         <li><a md-button aria-label="menu" ui-sref="admin.activities"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Activities </span></a></li>
+         <li><a md-button aria-label="menu" ui-sref="admin.prospect"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Prospect Types</span></a></li>
+      </ul>
+   </li> -->
+
+
+<!--        <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.competitor"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Competitor </span></a></li> -->
+ <!--    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.activities"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Activities </span></a></li>
+    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.prospect"><i class="nav-icon material-icons">folder</i><span class="nav-text" >Prospect Types</span></a></li> -->
+
+
+    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.report" id='delivery-report-link'><i class="nav-icon material-icons">map</i><span class="nav-text" >Delivery Report</span></a></li>
+
+
+    <li ng-if="show_menu"><a md-button aria-label="menu" id='customer-review-link' ui-sref="admin.customer-review"><i class="nav-icon material-icons">rate_review</i><span class="nav-text" >Customer Reviews</span></a></li>
+
+<!--     <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.map"><i class="nav-icon material-icons">map</i><span class="nav-text" >Live Tracking</span></a></li>
+ -->
+
+
+    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.travelmap" id='gps-hist-link'><i class="nav-icon material-icons">track_changes</i><span class="nav-text" >GPS - History </span></a></li>
+    <li ng-if="show_menu"><a md-button aria-label="menu" ui-sref="admin.mobileapp" id='download-app-link'><i class="nav-icon material-icons">get_app</i><span class="nav-text" >Download APP </span></a></li>
+
+
+
+    <li permission permission-except="['SUPERADMIN']">
+        <a md-button aria-label="menu" ui-sref="admin.profile">
+            <i class="nav-icon material-icons">settings</i><span class="nav-text">My Account</span></a>
+    </li>
+    <!--    <li ng-if="show_menu">
+      <a md-button aria-label="menu" href="#/dashboard/chart"><i class="nav-icon material-icons">equalizer</i><span class="nav-text" >CHARTS</span></a>
+      <ul>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/line"><span><span ></span> LINE & AREA </a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/bar"><span>BAR</span></a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/pie"><span>PIE</span></a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/scatter"><span>SCATTER</span></a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/radar"><span>RADAR</span></a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/funnel"><span >FUNNEL</span></a></li>
+         <li ng-if="show_menu"><a class="prepend-icon" md-button aria-label="menu" href="#/dashboard/chart/more"><span>MORE</span></a></li>
+      </ul>
+   </li> -->
+</ul>

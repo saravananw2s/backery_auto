@@ -1,0 +1,60 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card md-theme-watch>
+                <h3 class="text-center">{{msg}}</h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <h2 class="cauto">{{title}}</h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding class="overfl" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+
+
+
+
+                  <p ng-bind-html="view(data.id,'ID')"></p>
+                  <p ng-bind-html="view(data.cust,'Name')"></p>
+                  <p ng-bind-html="view(data.month_string,'Month')"></p>
+                  <p ng-bind-html="view(data.year,'Year')"></p>
+
+        
+                </div>
+
+                   <div class="col-md-6">
+                  <p ng-bind-html="view(data.credit_limit,'Credit Limit')"></p>
+                  <p ng-bind-html="view(data.outstandings,'Outstandings')"></p>
+                  <p ng-bind-html="view(data.last_visited,'Last visited')"></p>
+                  <p ng-bind-html="view(data.over_due,'over_due')"></p>
+
+                </div>
+
+            </div>
+        </md-content>
+        </div>
+    </article>
+</section>

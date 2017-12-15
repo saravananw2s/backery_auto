@@ -1,0 +1,72 @@
+<md-dialog aria-label="Reports" style="    width: 80%;">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    Reports
+                </h2>
+                <span flex="">
+                </span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">
+                        close
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+
+<h3 class="text-center" style="text-transform: uppercase;
+    margin-top: 18px;" ng-if="data.visit_list.length == 0 || data.length == 0 "> No Reports to Show </h3>
+                    <table class="mdl-data-table" style="width: 100%" ng-if="data.visit_list.length > 0">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            Customer
+                        </th>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            Items
+                        </th>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            Address
+                        </th>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            Delivered At
+                        </th>
+                        <th class="mdl-data-table__cell--non-numeric">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="val in data.visit_list">
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <span ng-repeat="user in customers | filter:{'id':  val.cust_id}:true">
+                                {{user.name }}
+                            </span>
+                        </td>
+                        <!--   <td class="mdl-data-table__cell--non-numeric">{{scheduletypes[val.type]}}</td> -->
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <p>
+                                {{val.notes }}
+                            </p>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <span ng-repeat="user in customers | filter:{'id':  val.cust_id}:true">
+                                {{user.address}}
+                            </span>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            {{val.timestamp}}
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                            {{val.status}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-dialog-content>
+    </form>
+</md-dialog>
+<md-dialog-actions layout="row">
+</md-dialog-actions>

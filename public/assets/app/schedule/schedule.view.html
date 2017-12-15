@@ -1,0 +1,159 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card md-theme-watch>
+                <h3 class="text-center">{{msg}}  {{data.id}}</h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <h2 class="cauto">{{title}}</h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding class="overfl" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+                  <!--   <p ng-bind-html="view(data.id,'Report ID')"></p> -->
+                    <p ng-bind-html="view(data.date,'Date')"></p>
+                </div>
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.emp,'Employee')"></p>
+                   <!--  <p ng-bind-html="view(data.add_by,'Allocated By')"></p>
+                    </p> -->
+                </div>
+                <div class="col-md-12">
+                    <b><h6>Task</h6></b>
+                    <div class="box box-default table-box mdl-shadow--2dp">
+                        <table class="mdl-data-table tablefix">
+                            <thead>
+                                <tr>
+                                    <th class="mdl-data-table__cell--non-numeric">Customer</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Items</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Address</th>
+                                    <th class="mdl-data-table__cell--non-numeric"> Delivered At  </th>
+                                    <th class="mdl-data-table__cell--non-numeric">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="val in cust_jobs">
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <span ng-repeat="user in customers | filter:{'id':  val.cust_id}:true">
+
+                         {{user.name }}
+
+                                    </span>
+                                    </td>
+
+                                   <!--   <td class="mdl-data-table__cell--non-numeric">{{scheduletypes[val.type]}}</td> -->
+
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                  <p> {{val.notes }}      </p>
+                                    </td>
+
+
+
+
+                                       <td class="mdl-data-table__cell--non-numeric">
+                                        <span ng-repeat="user in customers | filter:{'id':  val.cust_id}:true">
+
+
+                                    {{user.address}}
+
+                                    </span>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.timestamp}}</td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.status}}
+
+<span ng-if="val.status == 'completed'">
+<br>
+</span>
+
+<span ng-if="val.delivery_to">
+<br>
+Delivered To : {{val.delivery_to}}<br>
+Mobile no : {{val.delivery_phone}}<br>
+      </span>
+
+<span ng-if="val.signature">
+<br>
+<a href="{{val.signature}}" target="_blank">View Signature</a>
+      </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="doc">
+                    <hr>
+                    <h5>Documents / Images</h5>
+                    <div class="col-lg-4 col-md-4" ng-repeat="file in data.uploads  track by $index">
+                        <md-card>
+                            <div class="md-media-lg card-media mdobj ">
+                                <a download="{{file}}" href="{{file}}" title="File">
+                                    <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                </a>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+                <div class="col-md-12 ">
+                    <hr>
+                    <h5>Locations</h5>
+
+
+
+
+                    <div class="col-md-12 gmmap">
+                             <gm-map id="map"  options="{center: [clat, clng], zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP
+
+
+
+                                }">
+                                    <!--
+                                 <gm-marker ng-repeat="p in customers track by $index"
+
+                                    on-click="showinfo(event,p.id)"
+
+
+
+                                     position="[p.loc_lat, p.loc_lng]"
+options="{
+
+     icon : 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+}"
+
+                                     >
+
+
+                                    </gm-marker> -->
+                                    <gm-marker ng-repeat="p in  mapArray track by $index" position="[p.loc_lat, p.loc_lng]">
+                                    </gm-marker>
+                                </gm-map>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+        </div>
+    </article>
+</section>

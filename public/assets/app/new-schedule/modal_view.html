@@ -1,0 +1,415 @@
+<style>
+    .md-datepicker-calendar-pane,.md-select-menu-container.md-active {
+    z-index: 50000;
+}
+
+._md-datepicker-floating-label>md-datepicker .md-datepicker-button
+{
+    margin-top: -16px;
+}
+
+.pac-container
+{
+        z-index: 4000;
+}
+
+
+md-select.md-default-theme .md-select-value, md-select .md-select-value {
+    border-bottom-color:  rgb(224, 224, 224)
+}
+
+.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, .md-datepicker-triangle-button .md-datepicker-expand-triangle {
+    border-top-color: rgb(224, 224, 224)
+}
+
+.md-default-theme .md-datepicker-input-container, .md-datepicker-input-container {
+    border-bottom-color:  rgb(224, 224, 224)
+}
+
+md-radio-button.md-default-theme .md-off, md-radio-button .md-off {
+    border-color: rgb(224, 224, 224)
+}
+
+
+md-select.md-default-theme:not([disabled]):focus .md-select-value, md-select:not([disabled]):focus .md-select-value {
+    border-bottom-color:black;
+    color: black;
+}
+
+
+md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+       color: #aaaaaa;
+}
+/*md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label, md-input-container:not(.md-input-invalid).md-input-has-value label {
+       color: #aaaaaa;
+}
+*/
+
+ md-checkbox:not(.md-checked) .md-icon {
+    border-color:  #aaaaaa;
+}
+md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-icon {
+    border-color:  #aaaaaa;
+}
+
+
+md-input-container.md-default-theme:not(.md-input-invalid).md-input-has-value label, md-input-container:not(.md-input-invalid).md-input-has-value label {
+    color: #00326a;
+    font-size: 16px;
+}
+</style>
+<md-dialog aria-label="Reports" style="     max-width: 50%;
+    width: 50%;">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>
+               Task Details
+            </h2>
+            <span flex="">
+            </span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon class="material-icons">
+                    close
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <article class="article" ng-hide="edit">
+            <div class="box box-default">
+                <div class="box-body form-validation">
+
+
+
+
+<h5>
+                        <md-icon>
+                    perm_identity
+                        </md-icon>
+                 {{data.cust_name}}
+                    </h5>
+
+                    <h5>
+                        <md-icon>
+                     near_me
+                        </md-icon>
+                       {{data.cust_address}}
+                    </h5>
+
+                    <h5>
+                        <md-icon>
+                            merge_type
+                        </md-icon>
+                     {{data.method}}
+                    </h5>
+                    <h5>
+                        <md-icon>
+                            local_phone
+                        </md-icon>
+                     {{data.cust_phone}}
+                    </h5>
+
+                    <h5>
+                     <md-icon>
+                            restaurant_menu
+                        </md-icon>
+                        {{data.notes}}
+                    </h5>
+
+                    <h5>
+                        <md-icon>
+                            schedule
+                        </md-icon>
+                       {{data.schedule_date_time  | dateFill }}
+                    </h5>
+
+                    <h5>
+                        <md-icon>
+                            gps_fixed
+                        </md-icon>
+
+                        <span ng-if="data.is_geo_fence == 1">
+                      Geo Validation ({{data.geo_fence_meter}} Meters)
+                        </span>
+                        <span ng-if="data.is_geo_fence == 0">
+                        No
+                        </span>
+
+
+
+                    </h5>
+                    <h5>
+                                            <md-icon>
+                            book
+                        </md-icon>
+                        {{data.status}}
+                    </h5>
+                    <h5 ng-if="data.allocated_emp">
+
+                                            <md-icon>
+                           directions_bike
+                        </md-icon>
+                        {{data.allocated_emp}}
+                    </h5>
+                    <h5 ng-if="data.reviews">
+
+                                            <md-icon>
+                            perm_contact_calendar
+                        </md-icon>
+                        {{data.reviews}}
+                    </h5>
+                    <h5 ng-if="data.singature">
+                                            <md-icon>
+                            perm_contact_calendar
+                        </md-icon>
+                        {{data.signature}}
+                    </h5>
+
+<span ng-if="val.delivery_to">
+<br>
+Delivered To : {{data.delivery_to}}<br>
+Mobile no : {{data.delivery_phone}}<br>
+      </span>
+
+<span ng-if="data.signature">
+<br>
+
+<img ng-src="{{data.signature}}" target="_blank" />
+
+</span>
+                </div>
+            </div>
+        </article>
+        <article class="article" ng-show="edit">
+
+<style type="text/css">
+    md-backdrop.md-dialog-backdrop {
+    z-index: 2;
+}
+
+.md-dialog-container {
+    z-index: 51;
+}
+</style>
+            <div class="box box-default">
+                <div class="box-body form-validation">
+                    <div class="row">
+                        <form class="md-form-login form-validation" name="data_form1" novalidate="">
+                            <div class="col-md-12 ">
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Delivery At
+                                        </label>
+                                        <input id='add-tash-deleveryat' date-range-picker="" readonly="" name="name" ng-change="dateCheck()" ng-model="datePicker" options="{  timePicker: true,
+        timePickerIncrement: 5,
+          singleDatePicker: true,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        },
+        autoApply: true,
+        }
+
+        " required="" type="text"/>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Location Type
+                                        </label>
+                                        <md-select id='add-tash-locationtype' aria-label="select" ng-change="emptyCustomerInfo()" ng-model="data.type" required="">
+                                            <md-option ng-repeat="user in  place_type track by $index" ng-value="{{$index}}">
+                                                {{user}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Method
+                                        </label>
+                                        <md-select aria-label="select" id='add-tash-method' ng-model="data.method" required="">
+                                            <md-option ng-repeat="cust in  method track by $index" ng-selected="{{ data.method === cust ? 'true' : 'false' }}" value="{{cust}}">
+                                                {{cust}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Items to be delivered
+                                        </label>
+                                        <textarea id='add-tash-items' md-maxlength="1500" md-select-on-focus="" required ng-model="data.notes">
+                                        </textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="col-md-12" ng-if="data.type == 1 || data.type == 0">
+                                <span ng-if="data.type == 0">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Customer
+                                            </label>
+                                            <md-select aria-label="select" id='add-tash-custsel' ng-change="zoom();customersChange(data.cust_id)" ng-model="data.cust_id">
+
+                                                                                          <md-input-container class="md-block nopad nomar" >
+                            <label>Search Customer</label>
+                            <input ng-model="searchCustTerm.name" id='add-dash-cust'  type="text" onkeydown= "mdSelectOnKeyDownOverride(event)">
+                        </md-input-container>
+
+
+                                </md-select-header>
+
+
+
+                                                <md-option ng-repeat="cust in  customers |  filter:searchCustTerm" ng-selected="{{ data.cust_id === cust.id ? 'true' : 'false' }}" ng-value="{{cust.id}}">
+                                                    {{cust.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </span>
+                                <span ng-if="data.type == 1">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Customer name
+                                            </label>
+                                            <input name="name" ng-model="data.cust_name" type="text" id='dash-cust-name'/>
+                                        </md-input-container>
+                                    </div>
+                                </span>
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label class="phone">
+                                            Phone no
+                                        </label>
+                                        <input name="name" ng-intl-tel-input="" id='add-dash-phoneno' ng-model="data.cust_phone" required="" type="text"/>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-6" ng-if="data.type == 1">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Email
+                                        </label>
+                                        <input name="email" ng-model="data.cust_email" id='dash-add-email' ng-pattern="email_rex" required="" type="email"/>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-6">
+                                    <md-input-container class="md-block">
+                                        <label>
+                                            Address
+                                        </label>
+                                        <input googleplace="" ng-change="geocodeupdateloc1()" ng-model="data.cust_address" placeholder="Address" required="" type="text"/>
+
+
+                                      <md-icon ng-click="showmap = !showmap" ng-show="showmap" style="     margin-left: 90%;   color: #00326a;">
+
+                                  location_off
+                                  <md-tooltip>
+                                   Hide Map
+                                  </md-tooltip>
+                                      </md-icon>
+
+                                        <md-icon ng-click="showmap = !showmap" ng-hide="showmap" style="    color: #00326a;" id='dash-location-on'>
+
+                                        location_on
+
+                                             <md-tooltip>
+                                    Show Map
+                                  </md-tooltip>
+                                      </md-icon>
+                                    </md-input-container>
+
+
+
+                                </div>
+                                <div class="col-md-12" ng-if="data.type == 1 || data.type == 0">
+
+                                    <div class="col-md-12 gmmap" ng-if="showmap" style="    box-shadow: none; ">
+                                        <gm-map options="{center: [data.loc_lat, data.loc_lng], zoom: mapzoom}">
+                                            <gm-marker on-dragend="getpos(marker.getPosition(),map.getZoom())" options="{position:[data.loc_lat, data.loc_lng],draggable: true}">
+                                            </gm-marker>
+                                        </gm-map>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 nopad" style="    margin-top: 15px;">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Schedule status:
+                                            </label>
+                                            <md-select id='add-dash-userlist' aria-label="select" ng-model="data.status" required="">
+                                                <md-option ng-repeat="user in  schedule" ng-selected="{{ data.status === user ? 'true' : 'false' }}" value="{{user}}">
+                                                    {{user}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-6" ng-if="(data.status != 'Unallocated') && (data.status != 'Canceled')">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                To Employee
+                                            </label>
+                                            <md-select aria-label="select" ng-model="data.emp" id='add-dash-user'>
+                                                <md-option ng-repeat="user in  users" value="{{user.user_id}}">
+                                                    {{user.last_name}} {{user.first_name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 nopad" style="    margin-top: 15px;">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block">
+                                            <md-checkbox aria-label="Finished?" ng-false-value="0" ng-model="data.is_geo_fence" ng-true-value="1" id='add-dash-geoloc'>
+                                                Geo Location Validation
+                                            </md-checkbox>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-6" ng-if="data.is_geo_fence == 1">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Geo Location Meters
+                                            </label>
+                                            <input min="150" ng-model="data.geo_fence_meter" required="" type="text"/>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" permission="" permission-only="['SUPERADMIN','ADMIN']">
+                                <md-input-container class="md-block">
+                                    <label>
+                                        Allocated By Employee
+                                    </label>
+                                    <md-select aria-label="select" ng-model="data.add_by">
+                                        <md-option ng-repeat="user in  users" value="{{user.user_id}}">
+                                            {{user.last_name}} {{user.first_name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <h4 class="text-center" style="color: red">
+                                {{alert}}
+                            </h4>
+                            <div class="col-md-12">
+                                <md-button class="right wid md-raised btn-w-md md-primary" ng-click="submit_form()" type="submit">
+                                    {{ add ? 'Save' : 'Update' }}
+                                </md-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </md-dialog-content>
+</md-dialog>
+<md-dialog-actions layout="row">
+</md-dialog-actions>
+

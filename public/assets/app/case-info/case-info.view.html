@@ -1,0 +1,167 @@
+<style type="text/css">
+    p{
+        word-wrap: break-word;
+    }
+</style>
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-gt-xs="100" flex-xs="" layout="column">
+            <md-card md-theme-watch="">
+                <h3 class="text-center">
+                    {{msg}}
+                </h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>
+                        arrow_back
+                    </md-icon>
+                </md-button>
+                <h2 class="cauto">
+                    {{title}}
+                </h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>
+                        mode_edit
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>
+                        delete_forever
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content class="overfl" layout-padding="" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.case_id,'Report ID')">
+                    </p>
+                    <p ng-bind-html="view(data.cust_id,'Customer ')">
+                    </p>
+                    <p ng-bind-html="view(data.open_dt,'Open Date')">
+                    </p>
+                    <p ng-bind-html="view(visit_types[data.status],'Status')">
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.close_dt,'Close Date')">
+                    </p>
+                    <p ng-bind-html="view(data.taken_by,'Taken By')">
+                    </p>
+                    <p ng-bind-html="view(data.closed_by,'Closed By')">
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-12 nopad border" data-ng-repeat="case_info in data.cases_info_detail track by $index">
+                <!--  <div class="col-md-12 nopad">
+<h5 class="caseh5 "> Case Info {{$index + 1}}</h5>
+</div> -->
+                <span ng-if="case_info.case_type == 0">
+                    <div class="col-md-2" ng-bind-html="view2(case_types[case_info.case_type],'Case type')">
+                    </div>
+                    <div class="col-md-3" ng-bind-html="view2(case_info.batch_info,'Batch details')">
+                    </div>
+                    <div class="col-md-2" ng-bind-html="view2(case_info.order_no,'Order no')">
+                    </div>
+                    <div class="col-md-2" ng-bind-html="view2(case_info.product_id,'Product')">
+                    </div>
+                    <div class="col-md-3" ng-bind-html="view2(case_info.delivery_no,'Delivery no')">
+                    </div>
+                    <div class="col-md-9" ng-bind-html="view2(case_info.desc,'Comments')">
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary" data-ng-click="showTabDialog(case_info.uploads,'view')" type="button">
+                            Files
+                        </md-button>
+                    </div>
+                </span>
+
+                <span ng-if="case_info.case_type == 1">
+                    <div class="col-md-2" ng-bind-html="view2(case_types[case_info.case_type],'Case type')">
+                    </div>
+                    <div class="col-md-3" ng-bind-html="view2(case_info.delivery_date,'Delivered date')">
+                    </div>
+                    <div class="col-md-2" ng-bind-html="view2(case_info.deliver_from,'Delivered from')">
+                    </div>
+                    <div class="col-md-2" ng-bind-html="view2(case_info.delivery_no,'Delivery no')">
+                    </div>
+                    <div class="col-md-3" ng-bind-html="view2(case_info.site_info,'Site Info')">
+                    </div>
+                          <div class="col-md-2" ng-bind-html="view2(case_info.order_no,'Order no')">
+                    </div>
+
+                    <div class="col-md-7" ng-bind-html="view2(case_info.desc,'Comments')">
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary" data-ng-click="showTabDialog(case_info.uploads,'view')" type="button">
+                            Files
+                        </md-button>
+                    </div>
+                </span>
+
+                <span ng-if="case_info.case_type == 2">
+                    <div class="col-md-2" ng-bind-html="view2(case_types[case_info.case_type],'Case type')">
+                    </div>
+                    <div class="col-md-5" ng-bind-html="view2(case_info.invoice_date,'Invoice date')">
+                    </div>
+                    <div class="col-md-5" ng-bind-html="view2(case_info.invoice_no,'Invoice no')">
+                    </div>
+              
+                    <div class="col-md-9" ng-bind-html="view2(case_info.desc,'Comments')">
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary" data-ng-click="showTabDialog(case_info.uploads,'view')" type="button">
+                            Files
+                        </md-button>
+                    </div>
+                </span>
+                 <span ng-if="case_info.case_type == 3">
+                    <div class="col-md-2" ng-bind-html="view2(case_types[case_info.case_type],'Case type')">
+                    </div>
+                
+                          <div class="col-md-5" ng-bind-html="view2(case_info.order_no,'Order no')">
+                    </div>
+                       <div class="col-md-5" ng-bind-html="view2(case_info.delivery_no,'Delivery no')">
+                    </div>
+            
+                    <div class="col-md-9" ng-bind-html="view2(case_info.desc,'Comments')">
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary" data-ng-click="showTabDialog(case_info.uploads,'view')" type="button">
+                            Files
+                        </md-button>
+                    </div>
+                </span>
+
+                   <span ng-if="case_info.case_type == 4">
+                    <div class="col-md-2" ng-bind-html="view2(case_types[case_info.case_type],'Case type')">
+                    </div>
+
+            
+                    <div class="col-md-7" ng-bind-html="view2(case_info.desc,'Comments')">
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary" data-ng-click="showTabDialog(case_info.uploads,'view')" type="button">
+                            Files
+                        </md-button>
+                    </div>
+                </span>
+
+            </div>
+        </md-content>
+    </article>
+</section>

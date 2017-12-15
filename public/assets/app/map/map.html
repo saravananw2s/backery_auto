@@ -1,0 +1,41 @@
+<!-- <style type="text/css">
+    .gm-style-iw + div {display: none;}
+</style> -->
+<section class="container-fluid with-maxwidth chapter">
+    <article class="article">
+        <div class="col-md-12">
+            <div class="col-md-12 nopad">
+                <div class="col-md-6" style="padding-top:  30px;">
+                    <md-input-container class="full-width">
+                        <input ng-model="location" placeholder="Search Person" type="text" ng-change="pan()">
+                         </input>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+        <div class="row nopad">
+            <div class="col-md-12">
+                <section class="box box-default" style="height: 600px !important">
+                    <div class="box-body" style="height: 682px;">
+                        <gm-map center="mapcenter" class="ui-map" ng-show="mapshow" options="{zoom: zoom}">
+                            <gm-marker ng-init="emp.showmarker = true"
+
+                            ng-repeat="emp in (filteredItems = (onlineemp | filter: location)) " options="{position:[emp.lat, emp.lng],icon : {
+    url: '/assets/images/Vehicle.png',
+    size: map.Size(50, 50),
+    origin: maps.Point(0,0),
+    anchor: maps.Point(0, 0)
+}
+}"  on-click="emp.showmarker = !emp.showmarker" >
+
+
+                                <gm-infowindow   ng-show="emp.showmarker" options="{content:content(emp)}">
+                                </gm-infowindow>
+                            </gm-marker>
+                        </gm-map>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </article>
+</section>

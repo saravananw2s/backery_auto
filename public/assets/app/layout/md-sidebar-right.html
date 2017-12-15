@@ -1,0 +1,181 @@
+<style type="text/css">
+    md-sidenav {
+        width: 500px !important;
+        max-width: 500px !important;
+}
+p{
+    margin-top: 11px !important;
+
+    }
+
+    .md-sidenav-right md-tabs-canvas>md-pagination-wrapper md-ink-bar {
+    color: #2196F3;
+    background: #2196F3;
+    width: 100%;
+}
+
+
+
+.tsh {
+
+    text-align: center;
+    background: #757575;
+    padding: 10px;
+    color: white;
+    margin: 0px;
+    font-size: 19px;
+}
+
+.md-tab.md-active
+{
+    max-width: 100%;
+    width: 100%;
+}
+</style>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+    <div class="md-sidenav-inner" ng-controller="AppSidenavRightCtrl">
+        <md-tabs>
+
+
+         <md-tab>
+    <md-tab-label>
+        <i class="material-icons">
+            mail_outline
+        </i>
+    </md-tab-label>
+    <md-tab-body>
+        <md-content style="height: calc(100vh - 55px);">
+            <section>
+                                 <md-subheader class="color-primary">
+                    Un Readed
+                </md-subheader>
+                <md-list class="ui-md-list">
+                    <md-list-item class="md-2-line"  ng-repeat="notification in notifications| filter:{read_at:null}  | orderBy:'created_at':true" ng-click="ReadMyNotifications(notification.id)" >
+                        <md-icon class="material-icons" >
+                            mail_outline
+                        </md-icon>
+                        <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\TaskCompleted'">
+                            <h3>
+                                {{notification.data.data.notes}} -  {{notification.data.data.method}}
+                            </h3>
+                            <p>
+                                <span>
+                                    at    {{notification.data.data.cust_address}}
+                                </span>
+                                <span >
+                                    By   Agent :  {{notification.data.data.allocated_emp}}
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\SpeedLimit'">
+                            <h3>
+                                Speed Limit Violation  - {{notification.data.data.speed}} km/h
+                            </h3>
+                            <p>
+                                <span ng-repeat="location in locations | filter:{'id': parseInt(notification.data.data.cust_id)}:true">
+                                    at    {{location.name}}
+                                </span>
+                                <span ng-repeat="user in users | filter:{'user_id':  notification.data.data.allocated_emp_id}:true">
+                                    By   Agent :   {{user.last_name }} {{user.first_name }}
+                                </span>
+                            </p>
+                        </div>
+
+
+                        <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\TaskAllocated'">
+                            <h3>
+                            New Task Allocated
+                            </h3>
+                            <p>
+               <!--                  <span ng-repeat="location in locations | filter:{'id': parseInt(notification.data.data.cust_id)}:true">
+                                    at    {{location.name}}
+                                </span> -->
+                                <span>
+                                   To  Agent :   {{notification.data.data.allocated_emp}}
+                                </span>
+                                     <span>
+
+                            At :   {{notification.data.data.cust_address}}
+      </span>
+                            </p>
+
+
+                        </div>
+
+
+
+                   <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\TaskUpdated'">
+                            <h3>
+                            Task Updated
+                            </h3>
+                            <p>
+               <!--                  <span ng-repeat="location in locations | filter:{'id': parseInt(notification.data.data.cust_id)}:true">
+                                    at    {{location.name}}
+                                </span> -->
+                                <span>
+                                   To  Agent :   {{notification.data.data.allocated_emp}}
+                                </span>
+                                     <span>
+
+                            At :   {{notification.data.data.cust_address}}
+      </span>
+                            </p>
+
+
+                        </div>
+
+
+
+                        <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\EmpWelcome'">
+                            <h3>
+                              New Delivery Agent Registered
+                            </h3>
+                            <p>
+                  <!--               <span ng-repeat="location in locations | filter:{'id': parseInt(notification.data.data.cust_id)}:true">
+                                    at    {{location.name}}
+                                </span> -->
+                                <span ng-repeat="user in users | filter:{'user_id':  notification.notifiable_id}:true">
+                                   Delivery Agent  :   {{user.last_name }} {{user.first_name }}
+                                </span>
+
+                                                          <span>
+
+                            At :  {{notification.created_at }}
+      </span>
+                            </p>
+
+
+                        </div>
+
+
+                                           <div class="md-list-item-text" ng-if="notification.type == 'App\\Notifications\\EmpPasswordReset'">
+                            <h3>
+                              Delivery Agent Password Reset Alert
+                            </h3>
+                            <p>
+                  <!--               <span ng-repeat="location in locations | filter:{'id': parseInt(notification.data.data.cust_id)}:true">
+                                    at    {{location.name}}
+                                </span> -->
+                                <span ng-repeat="user in users | filter:{'user_id':  notification.notifiable_id}:true">
+                                   Delivery Agent  :   {{user.last_name }} {{user.first_name }}
+                                </span>
+
+                                                          <span>
+
+                            At :  {{notification.created_at }}
+      </span>
+                            </p>
+                        </div>
+
+                    </md-list-item>
+
+                     <h1 class="tsh" data-ng-click="GetNotify()"> Show more </h1>
+                </md-list>
+            </section>
+
+        </md-content>
+    </md-tab-body>
+</md-tab>
+    </div>
+</md-sidenav>

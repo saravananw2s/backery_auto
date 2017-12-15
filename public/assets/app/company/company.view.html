@@ -1,0 +1,78 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-gt-xs="100" flex-xs="" layout="column">
+            <md-card md-theme-watch="">
+                <h3 class="text-center">
+                    {{msg}}
+                </h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>
+                        arrow_back
+                    </md-icon>
+                </md-button>
+                <h2 class="cauto">
+                    {{title}}
+                </h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>
+                        mode_edit
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>
+                        delete_forever
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content class="overfl" layout-padding="" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.company_id,'ID')">
+                    </p>
+                    <p ng-bind-html="view(data.company_street,'Address')">
+                    </p>
+                    <p ng-bind-html="view(data.company_city,'City')">
+                    </p>
+                    <p ng-bind-html="view(data.company_state,'State')">
+                    </p>
+                    <p ng-bind-html="view(data.company_country,'Country')">
+                    </p>
+                    <p ng-bind-html="view(data.company_zipcode,'Zip Code')">
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.company_name,'Name')">
+                    </p>
+                    <p ng-bind-html="view('+'+data.company_phone,'Phone no')">
+                    </p>
+                    <p ng-bind-html="view(data.company_email,'Email')">
+                    </p>
+                    <p ng-bind-html="view(data.company_url,'Web URL')">
+                    </p>
+                    <p ng-bind-html="view(data.db_info.sub_domain_url,'Sub Domain link')">
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p ng-bind-html="view('<br>'+data.company_desc,'Company Desc')">
+                    </p>
+                </div>
+            </div>
+        </md-content>
+    </article>
+</section>

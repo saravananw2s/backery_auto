@@ -1,0 +1,132 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card md-theme-watch>
+                <h3 class="text-center">{{msg}}</h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <h2 class="cauto">{{title}}</h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding class="overfl" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <p ng-bind-html="view(data.id,'Report ID')"></p>
+                    <p ng-bind-html="view(data.start_date,'Start Date')"></p>
+                    <p ng-bind-html="view(data.end_date,'End Date')"></p>
+                    <p ng-bind-html="view(data.type,'Type')"></p>
+                    <p ng-bind-html="view(data.claim_id,'Claim id')"></p>
+                    <p ng-bind-html="view(with_manager[data.appr_status],'Status')"></p>
+                    <p ng-bind-html="view(data.purpose,'Purpose')"></p>
+
+                </div>
+                <div class="col-md-6">
+                    <p ng-bind-html="view(data.user_id,'Taken BY')"></p>
+                    <p ng-bind-html="view(data.location,'location')"></p>
+                    <p ng-bind-html="view(data.travel_with_mngr,'Visit With Manager')"></p>
+                    <p ng-bind-html="view(data.food_exp,'Food Expense')"></p>
+                    <p ng-bind-html="view(data.out_pdt,'Out of Packet Expense')"></p>
+                    <p ng-bind-html="view(data.extra_exp,'Extra Expense')"></p>
+                    <p ng-bind-html="view(data.travel_desc,'Travel Desc')"></p>
+                    <p ng-bind-html="view(data.total_exp,'Total Expense')"></p>
+                </div>
+                <div class="col-md-12">
+                    <b><h6>Hotel Expense Report</h6></b>
+                    <div class="box box-default table-box mdl-shadow--2dp">
+                        <table class="mdl-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="mdl-data-table__cell--non-numeric">Check in</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Check Out</th>
+
+                                    <th class="mdl-data-table__cell--non-numeric">Hotel Info</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Notes</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Total Exp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="val in hotel_exp">
+                                  <td class="mdl-data-table__cell--non-numeric">{{val.check_in}}</td>
+                                  <td class="mdl-data-table__cell--non-numeric">{{val.check_out}}</td>
+                                  <td class="mdl-data-table__cell--non-numeric">{{val.hotel_info}}</td>
+                                  <td class="mdl-data-table__cell--non-numeric">{{val.desc}}</td>
+
+                                  <td class="mdl-data-table__cell--non-numeric">{{val.total_exp}}</td>
+                        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                  <div class="col-md-12">
+                    <b><h6>Travel Expense Report</h6></b>
+                    <div class="box box-default table-box mdl-shadow--2dp">
+                        <table class="mdl-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="mdl-data-table__cell--non-numeric">Start </th>
+                                    <th class="mdl-data-table__cell--non-numeric">End</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Total Kms </th>
+                                    <th class="mdl-data-table__cell--non-numeric">Desc</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Total Exp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="val in travel_exp">
+
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.start}}</td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.end}}</td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.total_kms}}</td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.desc}}</td>
+                                    <td class="mdl-data-table__cell--non-numeric">{{val.total_exp}}</td>
+                        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12" ng-show="doc">
+                    <hr>
+                    <h5>Documents / Images</h5>
+                    <div class="col-lg-4 col-md-4" ng-repeat="file in data.uploads  track by $index">
+                        <md-card>
+                            <div class="md-media-lg card-media mdobj ">
+                                <a download="{{file}}" href="{{file}}" title="File">
+                                    <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                </a>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+              
+            </div>
+        </md-content>
+        </div>
+    </article>
+</section>

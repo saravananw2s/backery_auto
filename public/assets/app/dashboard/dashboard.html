@@ -1,0 +1,952 @@
+<link href="assets/app/dashboard/style.css" rel="stylesheet" type="text/css"/>
+<section class="container-fullwidth with-maxwidth chapter not-selectable " style=" padding-right: 3px;
+">
+    <article class="article">
+        <div class="col-md-4 nopad" ng-show="SideBar">
+            <div class="md-accordion">
+                <div class="toll" ng-click="task.expanded = !task.expanded;task.driver = false">
+                    <div class="md-toolbar-tools s">
+                        <p class="tab">
+                            <span class="emp pad-top6">
+                                Tasks
+                            </span>
+                            <i class="material-icons em" ng-hide="task.expanded">
+                                keyboard_arrow_up
+                            </i>
+                            <i class="material-icons em" ng-show="task.expanded">
+                                keyboard_arrow_down
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <span class="emp pad-top addbtn" ng-click="showTabDialog()" style="    margin-left: 19%;">
+                    <img src="assets/images/Add_35.png" id='dash-add-img' style=" height: 30px;
+    margin-top: 2px; "/>
+                    <md-tooltip md-direction="left">
+                        Add Task
+                    </md-tooltip>
+                </span>
+                <span class="emp pad-top addbtn" ng-click="TasksSearch=!TasksSearch" ng-init="TasksSearch=false">
+                    <!--  <img src="assets/images/Add_35.png" style=" height: 30px;
+    margin-top: 2px; " /> -->
+                    <md-icon id='dash-search-img' style=" height: 30px;
+    margin-top: 3px;
+    color: white;
+    font-size: 30px; ">
+                        search
+                    </md-icon>
+                    <md-tooltip md-direction="left">
+                        Search
+                    </md-tooltip>
+                </span>
+                <div class="toll" ng-click="task.driver = !task.driver;task.expanded = false" ng-init="task.driver = false">
+                    <div class="md-toolbar-tools s">
+                        <p class="tab">
+                            <span class="emp pad-top6">
+                                Drivers
+                            </span>
+                            <i class="material-icons em" ng-hide="task.driver" id='dash-arrow-up'>
+                                keyboard_arrow_up
+                            </i>
+                            <i class="material-icons em" ng-show="task.driver" id='dash-arrow-down'>
+                                keyboard_arrow_down
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <span class="emp pad-top addbtn" ng-click="DriverSearch=!DriverSearch" ng-init="DriverSearch=false">
+                    <!--   <img src="assets/images/Add_35.png" style=" height: 30px;
+    margin-top: 2px; " /> -->
+                    <md-icon id='dash-search' style=" height: 30px;
+    margin-top: 3px;
+    color: white;
+    font-size: 30px;
+}">
+                        search
+                    </md-icon>
+                </span>
+                <div class="dataContent" ng-show="task.expanded">
+                    <div class="box box-default sts" ng-show="TasksSearch">
+                        <input class="search_input" name="text" ng-model="TasksSearchValue" placeholder="Search tasks" type="text" id='dash-search-tasks'/>
+                    </div>
+                    <div class="box box-default" style="  margin-bottom: 0px; ">
+                        <div class="box-body style-3">
+                            <md-list-item class="list-item" ng-repeat="SubTask in tasksData.data | filter:{status: taskFilter}:taskFilterSt  | filter: TasksSearchValue ">
+                                <div class="col-md-12 nopad" ng-click="pan(SubTask,'task');ToggleTrackingView(SubTask,'task')" style="    margin-top: -25px;">
+                                    <h6 class="h6f">
+                                        {{SubTask.cust_name}}
+                                    </h6>
+                                    <p class="grey" style="font-size: 15px;     margin: 0px !important;     margin-bottom: 5px !important;">
+                                        <img src="assets/images/location.png" id='dash-location-img' style="    width: 16px;
+    margin-top: -3px;"/>
+                                        {{SubTask.cust_address}}
+                                    </p>
+                                    <div class="col-md-12 nopad">
+                                        <div class="col-md-7 nopad">
+                                            <p class="grey" style="font-size: 15px;     margin: 0px !important;">
+                                                <img src="assets/images/Clock.png" id='dash-clock-img' style="    width: 16px;
+    margin-top: -3px;"/>
+                                                {{SubTask.schedule_date_time  | dateToISO }}
+                                            </p>
+                                        </div>
+                                        <!--                                     ng-click="showTabDialog('',10,SubTask.id)" -->
+                                        <div class="col-md-5 nopad">
+                                            <p class="st" style="background:{{TaskStatusColor(SubTask.status)}}">
+                                                {{SubTask.status}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-list-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md-accordion bordertop">
+                <div class="dataContent" ng-show="task.driver">
+                    <div class="box box-default sts" ng-show="DriverSearch">
+                        <input class="search_input" name="text" ng-model="DriverSearchValue" id='dash-search-drivers' placeholder="Search Drivers" type="text"/>
+                    </div>
+                    <div class="box box-default" style="  margin-bottom: 0px; ">
+                        <div class="box-body style-3" style="
+    padding: 4px;
+
+    height: 78vh;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    ">
+                            <md-list-item style="    padding: 7px !important;" class="list-item" ng-repeat="emp in users | filter:criteriaMatch(criteria) | filter:criteriaMatchGPS(criteria) | filter: DriverSearchValue"
+                            >
+
+
+  <div class="col-md-12 nopad " ng-click="ToggleTrackingView(emp,'emp')">
+
+           <div class="col-md-12 nopad ">
+
+
+
+                                     <div class="col-md-10 nopad">
+
+                                                 <div class="col-md-2 nopad">
+                                    <img  style="    border: solid #436593;" class="md-avatar" onerror="this.src='assets/images/canva-man-delivering-boxes-on-scooter-icon-MAB60VR-Abk.png'" ng-src="{{parseJsonProfile(emp.profile_image)}}"/>
+
+
+
+                                <span class="st" style="background: {{MobileLast(emp.activity)}};
+
+border-radius: 50%;
+
+    float: left;
+    height: 20px;
+    width: 20px;
+    border: #c4ccc4 solid;
+    margin-top: -59px !important;
+    display: block;
+    border-width: 3px;
+    position: relative;
+    margin-left: -6px !important;
+
+">
+                                    </span>
+                                                  </div>
+
+
+    <div class="col-md-8 nopad">
+  <h6 class="h6f" style=" margin-top: 8px;    margin-left: 10px;
+">
+                                        {{emp.first_name +' '+ emp.last_name| limitTo :15   }}
+
+
+
+                                        </h6>
+
+                                        <span style="  font-size: 15px;  margin-left: 12px !important;">{{emp.activity }}</span>
+
+         </div>
+                                                  </div>
+                                       <div class="col-md-2 nopad">
+
+
+
+ <span class="st" ng-if="getEmpStatusCheck(emp.user_id)=='Free' " style="float: left;margin-top: 8px !important;  background: white;
+      color: #908989;
+    font-weight: 500;    padding-top: 1px;">
+                        Free
+                                            </span>
+                                            <span class="st" ng-if="getEmpStatusCheck(emp.user_id) != 'Free'" style="float: left;margin-top: 8px !important;  background: white;
+       color: #908989;
+    font-weight: 500;
+    padding-top: 1px;">
+
+        Busy
+            <!--                                     {{getEmpStatusCheck(emp.user_id)}}
+    {{getEmpStatusCheck(emp.user_id,true)}} -->
+                                            </span>
+
+<!--     <p class="st" style="      margin-top: 8px !important;  background: white;
+    color: #436593;
+
+        font-weight: 400;
+    padding-top: 1px;">
+
+
+                  {{getEmpStatusCheck(emp.user_id)}}
+                                      {{getEmpStatusCheck(emp.user_id,true)}}
+  </p>
+
+ -->
+                                    </div>
+
+
+
+    </div>
+
+
+
+                                    <div class="col-md-12 nopad " style="    margin-top: 20px;">
+
+                                        <div class="col-md-4 nopad">
+                                            <p class="grey text-center"  style="font-size: 16px;     color: #908989;   margin: 0px !important;">
+                                   <md-icon   style="    color: #00326a;   margin-top: -4px">
+                                    gps_fixed
+
+                                </md-icon>
+
+
+                                <md-tooltip>
+                                GPS Last Seen
+                                </md-tooltip>
+
+                                                {{getLastActivity(emp.user_id,false,true)}}
+                                            </p>
+                                        </div>
+
+
+
+    <div class="col-md-4 nopad">
+                                     <p class=" text-center" style="font-size: 16px;     color: #908989;   margin: 0px !important;">
+                                                      <md-icon   style="color: #21d221;    margin-top: -4px">
+                                    battery_std
+                                </md-icon>
+
+                                   {{GetBatteryStatus(emp.user_id)}}
+
+
+                                                          <md-tooltip>
+                               Device Battery Status
+                                </md-tooltip>
+                                            </p>
+
+                                    </div>
+
+                                                   <div class="col-md-4 nopad">
+                                            <p class=" text-center"  style="font-size: 16px;     color: #908989;   margin: 0px !important;">
+                                                      <md-icon  style="    color: #ef0c0c;     margin-top: -4px">
+                                    slow_motion_video
+                                </md-icon>
+
+
+
+                                                          <md-tooltip>
+                                Mobility Speed
+                                </md-tooltip>
+                                  {{GetSpeedStatus(emp.user_id)}}
+                                            </p>
+                                        </div>
+                                </div>
+                                </div>
+
+                            </md-list-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nopad" ng-class="{'col-md-8' :SideBar , 'col-md-12':!SideBar  }" ng-show="trackingMap">
+            <div class="col-md-12 chack nopad">
+                <div class="col-md-2 nopad">
+                    <div class="col-md-12 s1">
+                        <md-select aria-label="select" id='dash-tasks-status' class="no-ls" ng-change="taskStatus()" ng-model="taskFilter">
+                            <md-option ng-repeat="st in  schedule_status" ng-selected="{{ taskFilter === st ? 'true' : 'false' }}" value="{{st}}">
+                                {{ st == ''  ? 'All Tasks' : ''}}   {{st}}
+                            </md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="col-md-3 nopad">
+                    <img src="assets/images/CAlendar.png" style="    width: 25px;"/>
+                    <md-datepicker id='dash-update-date' class="md-block" md-placeholder="Enter Date" ng-change="updateData()" ng-model="date" required="">
+                    </md-datepicker>
+                </div>
+                <div class="col-md-2 nopad">
+                    <md-select aria-label="select" id='dash-driver-filter-status' class="no-ls" ng-change="DriverFilterStatus()" ng-init="DriverFilterV='All'" ng-model="DriverFilterV">
+                        <md-option ng-selected="{{ DriverFilterV == 'All' ? 'true' : 'false' }}" value="All">
+                            All Drivers
+                        </md-option>
+                        <md-option ng-selected="{{ DriverFilterV == 'Free' ? 'true' : 'false' }}" value="Free">
+                            Free
+                        </md-option>
+                        <md-option ng-selected="{{ DriverFilterV == 'Busy' ? 'true' : 'false' }}" value="Busy">
+                            Busy
+                        </md-option>
+                    </md-select>
+                </div>
+                <div class="col-md-2 nopad" style="margin-left: 45px;">
+                    <md-select aria-label="select" class="no-ls" id='dash-gps-filter' ng-change="DriverGPSFilterStatus()" ng-init="DriverGPSFilterV='All'" ng-model="DriverGPSFilterV">
+                        <md-option ng-selected="{{ DriverGPSFilterV == 'All' ? 'true' : 'false' }}" value="All">
+                            All Status
+                        </md-option>
+                        <md-option ng-selected="{{ DriverGPSFilterV == 'Active' ? 'true' : 'false' }}" value="Active">
+                            Online
+                        </md-option>
+                        <md-option ng-selected="{{ DriverGPSFilterV == 'In Active' ? 'true' : 'false' }}" value="In Active">
+                                Inactive
+                        </md-option>
+                        <md-option ng-selected="{{ DriverGPSFilterV == 'Offline' ? 'true' : 'false' }}" value="Offline">
+                                Offline
+                        </md-option>
+                    </md-select>
+                </div>
+                <div class="col-md-2 nopad" style="    padding-top: 5px;
+    padding-left: 31px;">
+                    <md-checkbox class="col-md-4 nopad" ng-checked="showTrafficLayer" id='dash-show-traffic' ng-click="showTrafficLayer=!showTrafficLayer" style="    margin: 0px !important;">
+                        Traffic
+                    </md-checkbox>
+                </div>
+            </div>
+            <div class="col-md-12 nopad">
+                <section class="box box-default" style="height: 84vh !important;margin-bottom: 0px; ">
+                    <div class="box-body" style="height: 84vh;">
+                        <md-input-container class="md-block" style="
+                            z-index: 9;
+    position: relative;
+    float: right;
+    padding-left: 9px;
+    width: 60%;
+    border: none;
+    height: 30px;
+    background: white">
+                            <input googleplace="" name="text"  ng-model="address" type="text" my-enter="geocodeupdateloc()"/>
+
+<md-icon style="    margin-top: -4px;"  ng-click="geocodeupdateloc()">
+search
+</md-icon>
+                        </md-input-container>
+                        <md-input-container class="md-block" style="
+                           z-index: 9;
+    position: relative;
+    /* width: 60%; */
+    border: none;
+    height: 50px;
+    float: left;
+    margin-left: -17px;
+    margin-top: 400px;
+    font-size: 30px;
+    width: 36px;
+    background: #345989;
+">
+                            <md-icon ng-click="SideBar=false" ng-show="SideBar" style="  color: white; font-size: 30px;      margin-top: 4px; ">
+                                keyboard_arrow_left
+                            </md-icon>
+                            <md-icon ng-click="SideBar=true" ng-hide="SideBar" style="    color: white; font-size: 30px;     margin-top: 4px;">
+                                keyboard_arrow_right
+                            </md-icon>
+                        </md-input-container>
+                        <gm-map center="mapcenter" class="ui-map" ng-if="mapshow" options="{zoom: zoom}" >
+                            <gm-trafficlayer ng-show="showTrafficLayer">
+                            </gm-trafficlayer>
+                            <gm-marker ng-init="info.st = false" ng-repeat="info in tasksData.data | filter:{status: taskFilter}:taskFilterSt" on-click="info.st = !info.st" options="{position:[info.loc_lat, info.loc_lng],
+
+
+                         icon : {
+
+    url: GetIcons(info.status,'task'),
+    size: map.Size(50, 50),
+    origin: maps.Point(0,0),
+    anchor: maps.Point(0, 0),
+
+
+}
+
+}">
+                                <gm-infowindow ng-show="info.st" options="{content:task_info(info)}">
+                                </gm-infowindow>
+                            </gm-marker>
+                            <gm-marker ng-init="emp.showmarker = false" ng-repeat="emp in onlineemp  | filter:criteriaMatch(criteria)" on-click="emp.showmarker = !emp.showmarker" options="{position:[emp.lat, emp.lng],icon : {
+    url: GetEmpIcons(emp),
+    size: map.Size(12, 20),
+    origin: maps.Point(0,0),
+    anchor: maps.Point(0, 0),
+
+}
+}">
+                                <gm-infowindow ng-show="emp.showmarker" options="{content:emp_info(emp)}">
+                                </gm-infowindow>
+                            </gm-marker>
+                        </gm-map>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </article>
+</section>
+<!-- Code View  -->
+<div  ng-show="ToggleTrackingViewStatus" class="hedto">
+    <link href="assets/app/dashboard/styleview.css" rel="stylesheet" type="text/css" />
+    <section>
+        <article>
+            <md-content>
+                <md-card md-theme="{{ showDarkTheme ? 'dark-orange' : 'default' }}" md-theme-watch="">
+                    <md-toolbar class="backhead">
+                        <div class="md-toolbar-tools">
+                            <md-button class="md-icon-button" ng-click="ToggleTrackingView()">
+                                <md-tooltip  md-direction="top">
+                                    Go Back
+                                </md-tooltip>
+                                <md-icon>
+                                    arrow_back
+                                </md-icon>
+                            </md-button>
+                            <h2 flex="" md-truncate="" ng-if="TaskView.id">
+                                Tasks #{{TaskView.id}}
+                            </h2>
+
+                                              <h2 flex="" md-truncate="" ng-if="!TaskView.id">
+
+                            </h2>
+
+
+
+ <md-input-container style="width: 250px;    margin-top: 32px;
+}" class="md-block"  ng-show="ToggleTrackingType == 'emp'">
+                                            <label>
+                                                Tasks
+                                            </label>
+                                            <md-select id='dash-task-select' aria-label="select" ng-model="TaskSelect"  ng-change="empLoadTask(TaskSelect)">
+
+                                                 <md-input-container class="md-block nopad nomar" >
+                            <label>Search Task</label>
+                            <input ng-model="userfileter"   type="text" onkeydown= "mdSelectOnKeyDownOverride(event)">
+                        </md-input-container>
+
+
+                                                <md-option value="All">
+                                                    All Task
+                                                </md-option>
+
+                                                <md-option ng-repeat="user in  TaskViewList  |  filter:userfileter" value="{{user.id}}">
+                                                    {{user.id}} {{user.cust_name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+
+
+
+
+                                        <md-input-container style="width: 250px;    margin-top: 32px;
+}" class="md-block"  ng-show="TaskView.status == 'Unallocated'">
+                                            <label>
+                                                Delivery Agents
+                                            </label>
+                                            <md-select aria-label="select" ng-model="TaskViewEmp_id" ng-change="ToggleTrackingViewDrawDirection(TaskViewEmp_id);">
+
+                                                 <md-input-container class="md-block nopad nomar" >
+                            <label>Search Employee</label>
+                            <input ng-model="userfileter"   id='dash-select-override' type="text" onkeydown= "mdSelectOnKeyDownOverride(event)">
+                        </md-input-container>
+
+                                                <md-option ng-repeat="user in  users  |  filter:userfileter" value="{{user.user_id}}">
+                                                    {{user.last_name}} {{user.first_name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                       <md-button  ng-show="TaskView.status == 'Unallocated'" class="right tb wid md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="allocatedTask(TaskViewEmp_id)" nstyle="    margin-top: 0%;" type="button"id='dash-taskview'>
+                                    Allocate
+                            </md-button>
+
+                            <md-button ng-click="showTabDialog('',10,TaskView.id)" ng-if="ToggleTrackingType == 'task'">
+                                <md-icon>
+                                    mode_edit
+                                </md-icon>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+
+
+
+
+  <div class="col-md-12  bggrow nopad"  ng-if="TaskSelect == 'All'" ng-clock >
+
+<div class="col-md-6" style="background: white;
+    z-index: 900;">
+
+                            <div class="col-md-3 nopad" >
+                                <p class="hedt">
+                                {{TaskViewList.length}}  -  Total Tasks
+                                </p>
+
+                            </div>
+
+                                            <div class="col-md-3 nopad">
+
+                                  <p class="hedt">
+                                     {{(TaskViewList|filter: { status: 'Allocated' }).length}} -Allocated
+                                </p>
+                            </div>
+
+
+                            <div class="col-md-3 nopad">
+                              <p class="hedt">
+                                   {{(TaskViewList|filter: { status: 'Delivered' }).length}}  - Delivered
+                                </p>
+                            </div>
+                                                      <div class="col-md-3 nopad">
+                                <p class="hedt">
+                                     {{(TaskViewList|filter: { status: 'Incomplete' }).length}} -  In Complete
+                                </p>
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+<div class="col-md-6" style="background: white;
+    z-index: 900;">
+
+                            <div class="col-md-6 nopad" >
+                                <p class="hedt">
+                              Duration : {{TripDuration}}
+                                </p>
+
+                            </div>
+
+                               <div class="col-md-6 nopad" >
+                            <p class="hedt">
+                             Distance : {{TripKMS}}
+                                </p>
+
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+      <md-content style="    position: static;
+    width: 100%;">
+<section class="box box-default" style="height: 50vh !important;margin-bottom: 0px; ">
+                                                            <div class="box-body" style="height: 50vh;">
+
+
+
+ <gm-map center="mapcenter"  refresh ="TaskSelect == 'All'"  ng-if="TaskSelect == 'All'"  class="ui-map" options="{zoom: ToggleTrackingViewZoom}">
+                                                  <!--                   <gm-trafficlayer ng-show="showTrafficLayer">
+                                                                    </gm-trafficlayer> -->
+
+                                                                               <gm-marker  ng-init="taskk.showmarker = false"  on-click="taskk.showmarker=!taskk.showmarker" ng-if="TaskViewList.length"  ng-repeat="tas in TaskViewList " options="{position:[tas.loc_lat,tas.loc_lng],icon : {
+                                url:  GetIcons(tas.status,'task'),
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+
+
+
+
+
+      <gm-infowindow ng-show="taskk.showmarker" options="{content:task_info(tas)}">
+                                </gm-infowindow>
+
+
+                                                                    </gm-marker>
+
+
+
+
+
+                 <gm-marker ng-repeat="info in TripGeoDataStart" options="{position:[info[0],info[1]],icon : {
+                                url:  'assets/images/Start_035.png',
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                        </gm-marker>
+
+
+                                                        <gm-marker   ng-repeat="info in TripGeoDataStop" options="{position:[info[0],info[1]],icon : {
+                                           url:  'assets/images/Stop_35.png',
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                        </gm-marker>
+
+
+
+
+
+                                                                    <gm-polyline  ng-repeat="data in TripGeoSegments" options="{
+
+                                     geodesic: true,
+                                      strokeColor: 'blue',
+                                      strokeOpacity: 1.0,
+                                      strokeWeight: 4,
+                                       icons: [{
+                                            icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,fillColor: 'black'},
+                                            offset: '100%'
+                                        }]
+
+                            }" path="data">
+                                                                    </gm-polyline>
+
+
+
+
+
+                                                           <gm-marker  ng-repeat="emp in onlineemp | filter:{    'user_id' : TaskViewEmp_id }:true"  options="{position:[emp.lat, emp.lng],icon : {
+                                url: GetEmpIcons(emp),
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                                    </gm-marker>
+
+
+                                                                </gm-map>
+
+                                                                  </div>
+                                                        </section>
+
+                                                        </md-content>
+
+                        </div>
+
+
+                    <div class="col-md-12 bggrow nopad" ng-if="TaskView.id && TaskSelect != 'All'" >
+                        <div class="col-md-6 nopad">
+                            <div class="col-md-12">
+                                <p class="p2 ti">
+                                Customer
+                                </p>
+
+                                <p class="st" style="background:{{TaskStatusColor(TaskView.status)}}">
+                                                {{TaskView.status}}
+                                            </p>
+
+
+<!--   {{data.notes}}
+ -->
+                                 <p class="p2">
+
+                       <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   person
+                                   </md-icon>   {{TaskView.cust_name}}
+                                </p>
+
+
+                                                                 <p class="p2">
+
+                       <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   access_time
+                                   </md-icon>   {{TaskView.schedule_date_time | dateFill}}
+                                </p>
+
+
+                                <p class="p2"  ng-if="TaskView.is_geo_fence == 1">
+
+                       <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   gps_fixed
+                                   </md-icon>
+
+
+
+                      Geo Validation ({{TaskView.geo_fence_meter}} Meters)
+
+                                </p>
+
+
+                              <!--   <p class="p2">
+
+
+                                 <img src="assets/images/Clock.png" style="    width: 16px;
+    margin-top: -3px;"/>  {{TaskView.schedule_date_time  | dateFill }}
+                                </p> -->
+                                <p class="p2">
+                                   <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   phone
+                                   </md-icon>  + {{TaskView.cust_phone }}
+                                </p>
+
+                         <!--        <p class="p2">
+                                   <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   type
+                                   </md-icon> {{TaskView.method }}
+                                </p> -->
+                                <p>
+                           <md-icon style="     color: rgb(0, 50, 106);   font-size: 21px;
+">
+                                   location_on
+                                   </md-icon>
+                                    {{TaskView.cust_address }}  <a ng-click="showTabDialog('', 11, TaskView)" href="">
+                                    More info
+                                    <md-tooltip>
+                                    View More Info
+                                    </md-tooltip>
+                                     </a>
+                                </p>
+                            </div>
+
+                                 <span ng-if="TaskViewEmp_id != ''">
+
+
+
+                        <div class="col-md-3 nopad">
+
+                            <md-icon class="cions" style="     font-size: 60px;
+    height: 60px;
+    transform: rotate(0deg);      color: #00326a;">
+                                directions_bike
+                            </md-icon>
+
+                                         <p class="hedt ts">
+                                Start <br/>
+                                <span class="cspan">{{taskStart}}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 nopad">
+                            <p class="p2 text-center ts" style="    padding-top: 25px;">
+                               <span id="panelId">
+                                </span>
+  <span ng-click="ToggleTrackingRedraw()" ng-if="ToggleTrackingShowRedraw">
+                                    <md-icon class="ics" style="display: inline;
+    float: right;
+    margin-top: -27px;">
+                                        refresh
+                                    </md-icon>
+                                </span>
+                            </p>
+                            <md-slider aria-label="Disabled discrete 2" max="10" md-discrete="" min="0" ng-disabled="true" ng-model="disabled2" step="3">
+                            </md-slider>
+                        </div>
+                        <div class="col-md-3 nopad">
+
+                            <md-icon class="cions" style="    font-size: 60px;
+    height: 60px;
+    transform: rotate(0deg);
+     color: #00326a">
+                            home
+                            </md-icon>
+
+                                      <p class="hedt ts">
+                                  Destination <br >
+
+                                                <span class="cspan">{{taskEnd}}</span>
+                            </p>
+                            <p class="p2 text-center " style="    font-size: 12px !important;">
+                            </p>
+                        </div>
+
+                        </span>
+                        </div>
+
+                        <div class="col-md-6 nopad">
+                                                <md-card-content layout="row" layout-align="space-between" style="    padding: 0px;">
+                                                    <div class="col-md-12 nopad">
+                                                        <section class="box box-default" style="height: 60vh !important;margin-bottom: 0px; ">
+                                                            <div class="box-body" style="height: 60vh;">
+
+
+
+                            <md-checkbox  ng-checked="showTrafficLayer" id='dash-show-traffic-layers' ng-click="showTrafficLayer=!showTrafficLayer" style="    margin: 0px !important; z-index: 5000;
+    float: right;
+    color: black;
+    font-size: 16px;">
+                                Traffic
+                            </md-checkbox>
+                                    <gm-map center="mapcenter" class="ui-map" ng-if="ToggleTrackingViewStatus" options="{zoom: ToggleTrackingViewZoom}">
+                                                                    <gm-trafficlayer ng-show="showTrafficLayer">
+                                                                    </gm-trafficlayer>
+                                                                    <gm-marker ng-init="emp.showmarker = false" ng-repeat="emp in onlineemp" ng-show="ToggleTrackingViewShowAllEmp" on-click="ToggleTrackingViewDrawDirection(emp);ToggleTrackingShowEmp(emp)" options="{position:[emp.lat, emp.lng],icon : {
+                                url: GetEmpIcons(emp),
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                                    </gm-marker>
+                                                                    <gm-marker ng-init="emp.showmarker = false" ng-repeat="emp in onlineemp | filter:{    'user_id' : TaskViewEmp_id }:true" ng-show="ToggleTrackingViewSingleEmp" options="{position:[emp.lat, emp.lng],icon : {
+                                url: GetEmpIcons(emp),
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                                    </gm-marker>
+                                                                    <gm-marker ng-if="(ToggleTrackingViewCustSt) && (ToggleTrackingViewCust.lat)" options="{position:[ToggleTrackingViewCust.lat,ToggleTrackingViewCust.lng],icon : {
+                                url:  GetIcons(TaskView.status,'task'),
+                                size: map.Size(12, 20),
+                                origin: maps.Point(0,0),
+                                anchor: maps.Point(0, 0),
+
+                            }
+                            }">
+                                                                    </gm-marker>
+                                                                    <gm-directions destination="ToggleRouteDestination" ng-if="ToggleRouteStatus" options="{ travelMode: google.maps.DirectionsTravelMode.DRIVING}" origin="ToggleRouteOrigin">
+                                                                        <gm-renderer gm-then="setPanel(renderer)" ng-if="ToggleRouteStatus" options="{polylineOptions:{strokeColor: '#00a8cb', strokeWeight: 4, strokeOpacity: 1.0}, suppressMarkers: true}">
+                                                                        </gm-renderer>
+                                                                    </gm-directions>
+                                                                    <gm-polyline ng-if="ToggleGPSData" options="{
+
+                                     geodesic: true,
+                                      strokeColor: 'blue',
+                                      strokeOpacity: 1.0,
+                                      strokeWeight: 4,
+                                       icons: [{
+                                            icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,fillColor: 'black'},
+                                            offset: '100%'
+                                        }]
+
+                            }" path="taskGeoData">
+                                                                    </gm-polyline>
+                                                                </gm-map>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </md-card-content>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                      <div class="col-md-12 bggrow nopad"  ng-if="TaskViewEmp_id == emp.user_id" ng-repeat="emp in users">
+                        <div class="col-md-6 nopad">
+                            <div class="col-md-6">
+
+
+
+                                <p class="p2 ti">
+                                    Driver
+                                </p>
+                                <p class="p2">
+                                                        <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   person
+                                   </md-icon>    {{emp.first_name }} {{emp.last_name }}
+                                </p>
+                                <p class="p2">
+
+                                                <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   phone
+                                   </md-icon>   (+ {{emp.phone }})
+                                </p>
+                                <p class="p2">
+                                                     <md-icon style="      color: rgb(0, 50, 106);  font-size: 21px;
+">
+                                   email
+                                   </md-icon>      {{emp.email }}
+                                </p>
+                            </div>
+                            <div class="col-md-6    ">
+
+                                <img
+onerror="this.src='assets/images/canva-man-delivering-boxes-on-scooter-icon-MAB60VR-Abk.png'"
+
+
+                                ng-src="{{parseJsonProfile(emp.profile_image)}}" class="mg" />
+                            </div>
+
+                        </div>
+<!--                         <div class="col-md-2">
+                        </div> -->
+                        <div class="col-md-6 nopad" >
+                            <div class="col-md-3 "  >
+                                <p class="hedt">
+                            Seen
+                                </p>
+                                <md-icon class="cions" style="    color: #3f80ce;">
+                                    gps_fixed
+                                </md-icon>
+                                <p class="p2 text-center" >
+
+                                  {{getLastActivity(TaskViewEmp_id,false,true)}}
+                    <!--                   {{TaskView.status}} -->
+                                </p>
+                            </div>
+                            <div class="col-md-3 ">
+                                <p class="hedt">
+                                    Speed
+                                </p>
+                                <md-icon class="cions" style="    color: #ef0c0c;">
+                                    slow_motion_video
+                                </md-icon>
+                                <p class="p2 text-center">
+                                     {{GetSpeedStatus(TaskViewEmp_id)}}
+                                </p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="hedt">
+                                    Battery
+                                </p>
+                                <md-icon class="cions" style="color: #21d221;">
+                                    battery_std
+                                </md-icon>
+                                <p class="p2 text-center">
+
+
+                                        {{GetBatteryStatus(TaskViewEmp_id)}}
+
+                                </p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="hedt">
+                                    Driver
+                                </p>
+                                <md-icon class="cions" style="color: rgb(0, 50, 106);">
+                                    directions_walk
+                                </md-icon>
+                                <p class="p2 text-center">
+                                        {{getEmpStatusCheck(emp.user_id)}}
+                                      {{getEmpStatusCheck(emp.user_id,true)}}
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </md-card>
+            </md-content>
+        </article>
+    </section>
+</div>

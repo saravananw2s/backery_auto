@@ -1,0 +1,46 @@
+<form novalidate name="reset" ng-submit="resetpwd()">
+    <div class="md-dialog-content">
+
+    <h5> Change Password </h5>
+      <md-input-container md-no-float flex>
+        <label>New Password </label>
+        <input flex ng-model="password" name="password" type="password" data-ng-minlength="3"  password-verify="{{chpwd}}" required  >
+
+          <div class="help-block" ng-messages="reset.password.$error" ng-if="reset.password.$dirty">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="minlength">This field is too short</p>
+          <p ng-message="passwordVerify">Password not match!</p>
+        </div>
+
+   
+      </md-input-container>
+
+          <md-input-container md-no-float flex>
+        <label>Confirm New Password </label>
+        <input flex ng-model="chpwd" name="chpwd" data-ng-minlength="3" type="password" password-verify="{{password}}" required>
+
+          <div class="help-block" ng-messages="reset.chpwd.$error" ng-if="reset.chpwd.$dirty">
+          <p ng-message="required">This field is required</p>
+          <p ng-message="minlength">This field is too short</p>
+          <p ng-message="passwordVerify">Password not match!</p>
+        </div>
+
+
+      </md-input-container>
+
+
+    </div>
+
+    <md-dialog-actions layout="row">
+
+        <md-button type="button" ng-click="close()" class="md-raised">
+     Close
+      </md-button>
+      <md-button  type="submit"  ng-disabled="reset.$invalid" class="md-primary md-raised">
+        Change Password
+      </md-button>
+
+    </md-dialog-actions>
+
+
+</form>

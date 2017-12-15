@@ -1,0 +1,170 @@
+<div class="app-header">
+    <div class="app-header-inner"  data-ng-class="{'bg-light': ['11','12','13','14','15','16','21'].indexOf(app.colorOption) >= 0,
+                         'bg-dark': app.colorOption === '31',
+                         'bg-primary': ['22','32'].indexOf(app.colorOption) >= 0,
+                         'bg-success': ['23','33'].indexOf(app.colorOption) >= 0,
+                         'bg-info': ['24','34'].indexOf(app.colorOption) >= 0,
+                         'bg-warning': ['25','35'].indexOf(app.colorOption) >= 0,
+                         'bg-danger': ['26','36'].indexOf(app.colorOption) >= 0}">
+        <div class="hidden-lg hidden-md pull-left">
+            <a href="" toggle-sidebar class="header-icon toggle-sidebar-btn">
+               <i class="material-icons">menu</i>
+            </a>
+        </div>
+        <div class="brand hidden-xs hidden-sm">
+
+        <img  style="     height: 57px;
+    margin-top: 0px;" ng-src="{{::app.logo}}">
+
+        </div>
+        <div class="top-nav-left">
+            <ul class="list-unstyled list-inline">
+
+
+
+
+    <li data-ng-controller="RootCtrl as ctrl"  permission  permission-only="'SUPERADMIN'">
+                    <md-menu md-position-mode="target-right target">
+                        <md-button class="header-btn" aria-label="menu"" ng-click="$mdOpenMenu($event)">
+                            Company - {{company}}
+
+                           <i class="material-icons">keyboard_arrow_down</i>
+
+
+                        </md-button>
+                        <md-menu-content width="3">
+                            <md-menu-item ng-repeat="auth in rootapis track by $index">
+                                <md-button ng-click="set(auth.company_name,auth.domain.sub_domain_url)">
+
+                               {{auth.company_name}}
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </li>
+
+
+
+              <!--   <li>
+                    <md-button class="header-btn" open-search-overlay><i class="material-icons">search</i></md-button>
+                </li>
+                <li>
+                    <md-menu md-position-mode="left bottom">
+                        <md-button class="header-btn" aria-label="menu" ng-click="$mdOpenMenu($event)">
+                            <i class="material-icons">notifications_none</i>
+                            <span class="badge">3</span>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-list class="ui-md-list">
+                                <md-list-item class="md-2-line" ng-click="null">
+                                    <md-icon class="material-icons">mail_outline</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>New mail from David</h3>
+                                        <p>5 minutes ago</p>
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-2-line" ng-click="null">
+                                    <md-icon class="material-icons">chat_bubble_outline</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>Message from Jane</h3>
+                                        <p>15 minutes ago</p>
+                                    </div>
+                                </md-list-item>
+                                <md-list-item class="md-2-line" ng-click="null">
+                                    <md-icon class="material-icons">person_outline</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>New member John joined</h3>
+                                        <p>1 hour ago</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-menu-content>
+                    </md-menu>
+                </li> -->
+            </ul>
+        </div>
+        <div class="top-nav-right" style="    width: 50%;">
+
+
+
+
+            <ul class="list-unstyled pull-right pad2s" >
+
+
+                <li  data-ng-controller="RootCtrl as ctrl" style="padding-right: 50px;">
+                    <md-button class="header-btn" id='help' ng-click="showDemo()">Help ? </md-button>
+                </li>
+
+
+      <li><a href=" " class="header-btn " id='notifications_' md-button ng-click="toggleRight() " ng-hide="isOpenRight() "><i class="material-icons ">notifications_none</i>
+
+              <div  class="badge" data-ng-controller="AppSidenavRightCtrl as new">
+
+              {{newcount}}
+
+              </div>
+         </a>
+                </li>
+
+
+
+                <li>
+
+                    <md-menu md-position-mode="target-right target ">
+                        <md-button class="header-btn " aria-label="menu" ng-click="$mdOpenMenu($event) ">
+
+    <md-icon class="material-icons ">account_circle</md-icon><span >  My Account</span>
+
+
+                        </md-button>
+                        <md-menu-content width="3 ">
+
+                            <md-menu-item>
+
+
+                            <md-button aria-label="menu " ui-sref="admin.profile" permission
+     permission-except="['SUPERADMIN']">
+
+
+                          <md-icon class="material-icons ">face</md-icon><span >PROFILE</span>
+
+                            </md-button>
+
+
+
+                            <md-button aria-label="menu " id='profile' ui-sref="admin.adminprofile" permission permission-only="'SUPERADMIN'">
+
+
+                          <md-icon class="material-icons ">face</md-icon><span >PROFILE</span>
+
+                            </md-button>
+
+
+
+                            </md-menu-item>
+
+                               <md-menu-item>
+
+                            <md-button aria-label="menu " ui-sref="logout" id='logout'>
+
+                            <md-icon class="material-icons ">keyboard_tab</md-icon><span >LOG OUT</span>
+
+                            </md-button>
+
+
+
+                            </md-menu-item>
+
+
+                        </md-menu-content>
+                    </md-menu>
+                </li>
+<!--
+         <li><a href=" " class="header-btn " md-button ng-click="toggleRight() " ng-hide="isOpenRight() "><i class="material-icons ">more_vert</i>
+         </a>
+         </li>  -->
+            </ul>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,360 @@
+<section class="container-fluid with-maxwidth chapter">
+    <div class="box-body">
+        <div class="col-md-12 nopad" ng-show="showform">
+            <div class="right actionbtn">
+                <md-button class="md-raised btn-w-md md-primary" ng-click="submit_form()" type="button">
+                    {{ add ? 'Save' : 'Update' }}
+                </md-button>
+                <md-button class="md-raised btn-w-md md-primary" ng-click="closeform()" type="button">
+                    Close
+                </md-button>
+            </div>
+        </div>
+        <div class="col-md-12 nopad" ng-hide="showform">
+            <div class="right addbtn">
+                <md-button class="md-raised btn-w-md md-accent" ng-click="addbtn()">
+                    Add {{title}}
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <article class="article" ng-show="showform">
+        <div class="box box-default">
+            <div class="box-body form-validation">
+                <div class=" col-md-12">
+                    <form class="md-form-login form-validation" name="data_form" novalidate="" unsaved-warning-form="">
+                        <div class="col-md-12 nopad">
+                            <div class="col-md-4 nopad">
+                                <md-input-container class="md-block">
+                                    <label>
+                                        Date
+                                    </label>
+                                    <md-datepicker class="md-block" md-placeholder="Enter date" ng-model="data.date" required="">
+                                    </md-datepicker>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4 nopad">
+                                <md-input-container class="md-block">
+                                    <label>
+                                        Employee
+                                    </label>
+                                    <md-select  ng-change="searchTerm.full_name = ''" aria-label="select" ng-model="data.emp" required="">
+                                <md-select-header>
+
+
+                                          <md-input-container class="md-block">
+                            <label>Search </label>
+                            <input ng-model="searchTerm.full_name"   type="text" onkeydown= "mdSelectOnKeyDownOverride(event)">
+                        </md-input-container>
+
+
+                                </md-select-header>
+                                        <md-option ng-repeat="user in  users |  filter:searchTerm"  ng-value="{{user.user_id}}" ng-selected="{{ data.emp === user.user_id ? 'true' : 'false' }}">
+                                            {{user.last_name}} {{user.first_name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4 nopad" style="    padding-left: 10%;">
+                                <md-button class="md-raised btn-w-md " data-ng-click="addNewChoice()" type="button">
+                                    Add Task
+                                </md-button>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col-md-4" class="md-block">
+                            <p class="form_p">Task Date</p>
+                        </div>
+                        <div class="col-md-8">
+                            <md-datepicker class="md-block" required ng-model="data.date" md-placeholder="Enter date"></md-datepicker>
+                        </div>
+                    </div> -->
+                        <!--           <div class="col-md-12 nopad mt20">
+                        <div class="col-md-8">
+                            <md-input-container class="md-block">
+                                <label>Employee</label>
+                                <md-select ng-model="data.emp" aria-label="select" required>
+                                    <md-option ng-repeat="user in  users" value="{{user.user_id}}"> {{user.last_name}} {{user.first_name}} </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-4">
+                            <md-button type="button" data-ng-click="addNewChoice()" class="md-raised btn-w-md ">Add Task</md-button>
+                        </div>
+                    </div> -->
+                        <div class="col-md-12 nopad">
+                            <div class="col-md-8 nopad">
+                                <div class="col-md-12 nopad" data-ng-repeat="cus_info in data.cust_jobs">
+                                    <div class="col-md-3">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Customer
+                                            </label>
+                                            <md-select ng-change="searchCustTerm.name = ''" aria-label="select" ng-change="zoom()" ng-model="cus_info.cust_id" ng-required>
+
+                                <md-select-header>
+
+
+                                          <md-input-container class="md-block">
+                            <label>Search </label>
+                            <input ng-model="searchCustTerm.name"   type="text" onkeydown= "mdSelectOnKeyDownOverride(event)">
+                        </md-input-container>
+
+
+                                </md-select-header>
+
+
+                                                <md-option ng-repeat="cust in  customers  | filter:searchCustTerm " ng-value="{{cust.id}}" ng-selected="{{ cus_info.cust_id === cust.id ? 'true' : 'false' }}">
+                                                    {{cust.name}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                               <!--      <div class="col-md-3">
+                                        <md-input-container class="md-block">
+                                            <label>
+                                                Type
+                                            </label>
+                                            <md-select aria-label="select" ng-model="cus_info.type" required="">
+                                                <md-option ng-repeat="type in  scheduletypes track by $index" value="{{$index}}">
+                                                    {{type}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div> -->
+                                    <div class="col-md-7">
+
+
+
+                        <md-input-container class="md-block">
+                            <label>Items to be delivered</label>
+                            <textarea  md-maxlength="1500"
+                            ng-model="cus_info.notes" md-select-on-focus></textarea>
+                        </md-input-container>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <md-button class=" md-primary" data-ng-click="removeChoice( $index)" type="button">
+                                            X
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" ng-if="data.cust_jobs.length > 0" style="    height: 400px;     margin-bottom: 50px;">
+                                <gm-map id="map" ng-show="showform" options="{center: [clat, clng], zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP
+
+
+
+                                }">
+                                    <!--
+                                 <gm-marker ng-repeat="p in customers track by $index"
+
+                                    on-click="showinfo(event,p.id)"
+
+
+
+                                     position="[p.loc_lat, p.loc_lng]"
+options="{
+
+     icon : 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+}"
+
+                                     >
+
+
+                                    </gm-marker> -->
+                                    <gm-marker ng-repeat="p in mapArray track by $index" on-click="showinfo(event,p.id)" position="[p.loc_lat, p.loc_lng]">
+                                    </gm-marker>
+                                </gm-map>
+                            </div>
+                        </div>
+                        <div class="col-md-12" permission="" permission-only="['SUPERADMIN','ADMIN']">
+                            <md-input-container class="md-block">
+                                <label>
+                                    Allocated By Employee
+                                </label>
+                                <md-select aria-label="select" ng-model="data.add_by">
+                                    <md-option ng-repeat="user in  users" value="{{user.user_id}}">
+                                        {{user.last_name}} {{user.first_name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-12">
+                            <md-button class="md-raised right wid btn-w-md md-primary" data-ng-click="closeform()" type="button">
+                                Close
+                            </md-button>
+                            <md-button class="right wid md-raised btn-w-md md-primary" ng-click="submit_form()" type="button">
+                                {{ add ? 'Save' : 'Update' }}
+                            </md-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+
+<!--                <div class="col-md-6">
+            <div class="col-md-12">
+                <h5 class="text-center"> Search Customers </h5>
+                <div class="col-md-8">
+                    <place-autocomplete class="mar0" ng-model="location"></place-autocomplete>
+                </div>
+
+                <div class="col-md-4">
+                    <md-button type="button" data-ng-click="full()" class="md-raised btn-w-md md-primary">Search</md-button>
+                </div>
+            </div>
+            <div class="col-md-12" style="    height: 400px;">
+                <gm-map id="map" ng-show="showform" options="{center: [clat, clng], zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP}">
+                    <gm-marker ng-repeat="p in positions track by $index" position="[p.loc_lat, p.loc_lng]" on-click="showinfo(event,p.id)">
+                    </gm-marker>
+                </gm-map>
+            </div>
+        </div>
+ -->
+<md-card>
+    <md-content flex="" layout="column">
+        <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+            <div class="md-toolbar-tools">
+                <span>
+                    {{title}} Info
+                </span>
+                <span flex="">
+                </span>
+                <md-button class="md-icon-button" ng-click="resettable()">
+                    <md-tooltip>
+                        Refresh
+                    </md-tooltip>
+                    <md-icon>
+                        refresh
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="activefilter=!activefilter;showsearch = false">
+                    <md-tooltip>
+                        Filters
+                    </md-tooltip>
+                    <md-icon>
+                        filter_list
+                    </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="showsearch = !showsearch;activefilter = false">
+                    <md-tooltip>
+                        Search
+                    </md-tooltip>
+                    <md-icon>
+                        search
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-toolbar aria-hidden="false" class="md-table-toolbar md-default" ng-show="showsearch">
+            <div class="md-toolbar-tools">
+                <form class="flex">
+                    <md-input-container class="md-block" flex="100">
+                        <input class="searchmrg" ng-model="searchFish" placeholder="Search">
+                        </input>
+                    </md-input-container>
+                </form>
+            </div>
+        </md-toolbar>
+        <md-whiteframe layout="row" ng-repeat="single in multisearch" ng-show="activefilter">
+            <div class="md-toolbar-tools mrg1">
+                <md-input-container flex="40">
+                    <label>
+                        Column
+                    </label>
+                    <md-select ng-change="updateDataTable()" ng-model="single.column">
+                        <md-optgroup label="Column">
+                            <md-option ng-repeat="column in autocolumn" ng-value="column.name">
+                                {{column.display}}
+                            </md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block searchmrg" flex="40">
+                    <label>
+                        Search
+                    </label>
+                    <input ng-change="updateDataTable()" ng-model="single.ident">
+                    </input>
+                </md-input-container>
+                <md-button class="md-raised right wid btn-w-md md-warn h40" ng-click="deleteRow(single.id)" ng-disabled="multisearch.length == 1" type="button">
+                    <md-tooltip>
+                        Remove Filter
+                    </md-tooltip>
+                    Remove
+                </md-button>
+                <md-button class="md-raised right wid btn-w-md md-primary h40" ng-click="addRow()">
+                    <md-tooltip>
+                        Add Filter
+                    </md-tooltip>
+                    Add
+                </md-button>
+            </div>
+        </md-whiteframe>
+        <md-table-container>
+            <table md-table="">
+                <md-progress-linear md-mode="indeterminate" ng-show="!wwstatus">
+                </md-progress-linear>
+                <thead md-head="" md-order="query.order">
+                    <tr md-row="">
+                        <th md-column="" md-order-by="{{column.name}}" ng-repeat="column in autocolumn">
+                            <span>
+                                {{column.display}}
+                            </span>
+                        </th>
+                        <th md-column="">
+                            <span>
+                                Actions
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body="">
+                    <tr md-auto-select="" md-row="" md-select="row" md-select-id="name" ng-repeat="vim in datatable.data |filter : searchFish | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                        <td md-cell="">
+                            {{vim.id}}
+                        </td>
+                        <td md-cell="">
+                            {{vim.date}}
+                        </td>
+                        <td md-cell="">
+                           {{vim.emp_info}}
+                        </td>
+                        <td md-cell="">
+                            <md-button aria-label="mode_edit" class="md-icon-button md-primary" data-ng-click="update_info(vim.id)">
+                                <md-tooltip>
+                                    Edit
+                                </md-tooltip>
+                                <md-icon class="material-icons">
+                                    mode_edit
+                                </md-icon>
+                            </md-button>
+                            <md-button aria-label="visibility" class="md-icon-button" data-ng-click="view(vim.id)">
+                                <md-tooltip>
+                                    View
+                                </md-tooltip>
+                                <md-icon class="material-icons">
+                                    visibility
+                                </md-icon>
+                            </md-button>
+                            <md-button aria-label="delete_forever" class="md-icon-button md-warn" data-ng-click="delete(vim.id)">
+                                <md-tooltip>
+                                    Delete
+                                </md-tooltip>
+                                <md-icon class="material-icons">
+                                    delete_forever
+                                </md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <md-table-pagination md-boundary-links="options.boundaryLinks" md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-page-select="options.pageSelect" md-total="{{datatable.data.length}}">
+        </md-table-pagination>
+    </md-content>
+</md-card>
+
+</section>

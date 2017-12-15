@@ -1,0 +1,295 @@
+
+<section class="container-fluid with-maxwidth chapter">
+    <div class="box-body">
+        <div class="col-md-12 nopad" ng-show="showform">
+            <div class="right actionbtn">
+                <md-button type="button" ng-click="submit_form()"  id='emp-add' class="md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                <md-button type="button" ng-click="closeform()" id='emp-close' class="md-raised btn-w-md md-primary">Close</md-button>
+            </div>
+        </div>
+        <div class="col-md-12 nopad" ng-hide="showform">
+            <div class="right addbtn">
+                <md-button class="md-raised btn-w-md md-accent" id='emp-add-action' ng-click="addbtn()">Add {{title}}</md-button>
+            </div>
+        </div>
+    </div>
+    <article class="article" ng-show="showform">
+        <div class="box box-default">
+            <div class="box-body form-validation">
+                <form name="data_form" unsaved-warning-form class="md-form-login form-validation" novalidate>
+                                       <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>First Name </label>
+                            <input ng-model="data.first_name" required type="text" id='emp-firstname'>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Last Name </label>
+                            <input ng-model="data.last_name" required type="text" id='emp-lastname'>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label class="phone">Phone no </label>
+                            <input required ng-model="data.phone" id='emp-phone' type="text"
+
+
+
+                            ng-intl-tel-input>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input required type="email" name="email" id='emp-email' ng-model="data.email" ng-pattern="/^.+@.+\..+$/" />
+
+                        </md-input-container>
+                    </div>
+
+
+           <div class="col-md-4">
+                        <md-input-container class="md-block">
+                            <label>Gps Tracking </label>
+                            <md-select ng-model="data.zipcode" aria-label="select" id='emp-zipcode' required>
+                                <md-option ng-repeat="user in  gps_active track by $index" value="{{$index}}"> {{user}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+
+
+                  <!--   <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> City </label>
+                            <input  type="text" name="city" ng-model="data.city">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> State </label>
+                            <input  type="text" name="state" ng-model="data.state">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> Country </label>
+                            <input  type="text" name="country" ng-model="data.country">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> Zip Code </label>
+                            <input  type="text" limitto="6" name="zip" ng-model="data.zipcode">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Phone ID </label>
+                            <textarea ng-model="data.phone_imei" md-select-on-focus></textarea>
+                        </md-input-container>
+                    </div> -->
+                    <div class="col-md-4">
+                        <md-input-container class="md-block">
+                            <label>Status</label>
+                            <md-select ng-model="data.is_active" aria-label="select" required id='emp-track-status'>
+                                <md-option ng-repeat="user in  active track by $index" value="{{$index}}"> {{user}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+
+
+
+                    <div class="col-md-4" ng-hide="is_manager">
+                        <md-input-container class="md-block">
+                            <label>Role</label>
+                            <md-select ng-model="data.role_id" id='emp-role-id' aria-label="select" required>
+                                <md-option ng-repeat="role in roles" value="{{role.role_id}}"> {{role.desc}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                               <div class="col-md-12">
+
+
+                                            <md-input-container class="md-block">
+                            <label>Address</label>
+                            <textarea  md-maxlength="1500"
+                            ng-model="data.street" md-select-on-focus id='emp-address'></textarea>
+                        </md-input-container>
+
+                    </div>
+
+
+
+<!-- <div class="col-md-12 nopad" ng-show="data.role_id == 1 && !is_manager" >
+                      <div class="col-md-3 ">
+                        <md-input-container class="md-block">
+                            <label>Belongs to Manager</label>
+                            <md-select ng-model="data.belongs_manager" aria-label="select" >
+                                <md-option ng-repeat="emp in managers " value="{{emp.user_id}}"> {{emp.last_name}}  {{emp.first_name}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>     </div>
+ -->
+
+                    <div class="col-md-12 nopad">
+                        <div class="col-lg-4 col-md-4 pad8" ng-repeat="file in data.profile_image  track by $index">
+                            <md-card>
+                                <div class="md-media-lg card-media mdobj ">
+                                    <a download="{{file}}" href="{{file}}" title="File" id='emp-download'>
+                                        <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                    </a>
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+                                    <md-button ng-click="FileDelete($index)" id='emp-remove'>Remove File </md-button>
+                                </md-card-actions>
+                            </md-card>
+                        </div>
+                    </div>
+                    <div class="col-md-12 nopad">
+                        <h5>{{title}} Profile Image Upload</h5>
+                    </div>
+                    <div class="col-md-12 nopad">
+
+
+                  <lf-ng-md-file-input lf-api="lfApi"  name="files" lf-files="files" lf-mimetype="image/*"  lf-filesize="10MB" >
+                </lf-ng-md-file-input>
+
+
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <md-button type="button" data-ng-click="closeform()" id='emp-close' class="md-raised right wid btn-w-md md-primary">Close</md-button>
+                        <md-button type="submit" ng-click="submit_form()" id='emp-submit' class="right wid md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+    <md-card>
+        <md-content layout="column" flex>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+                <div class="md-toolbar-tools">
+                    <span>{{title}}s Info </span>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="resettable()" id='emp-rest-table'>
+                        <md-tooltip>
+                            Refresh
+                        </md-tooltip>
+                        <md-icon>refresh</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" id='emp-refresh' ng-click="activefilter=!activefilter;showsearch = false">
+                        <md-tooltip>
+                            Filters
+                        </md-tooltip>
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" id='emp-filter_list' ng-click="showsearch = !showsearch;activefilter = false">
+                        <md-tooltip>
+                            Search
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="showsearch" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <form class="flex">
+                        <md-input-container class="md-block" flex=100>
+                            <input ng-model="searchFish" placeholder="Search" class="searchmrg">
+                        </md-input-container>
+                    </form>
+                </div>
+            </md-toolbar>
+            <md-whiteframe layout="row" ng-repeat="single in multisearch" ng-show="activefilter">
+                <div class="md-toolbar-tools mrg1">
+                    <md-input-container flex=40>
+                        <label>Column</label>
+                        <md-select ng-model="single.column" id='emp-update-date' ng-change="updateDataTable()">
+                            <md-optgroup label="Column">
+                                <md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block searchmrg" flex=40>
+                        <label>Search</label>
+                        <input ng-change="updateDataTable()" ng-model="single.ident">
+                    </md-input-container>
+                    <md-button type="button" class="md-raised right wid btn-w-md md-warn h40" ng-click="deleteRow(single.id)" ng-disabled="multisearch.length == 1">
+                        <md-tooltip>
+                            Remove Filter
+                        </md-tooltip>
+                        Remove
+                    </md-button>
+                    <md-button class="md-raised right wid btn-w-md md-primary h40" id='emp-add-row' ng-click="addRow()">
+                        <md-tooltip>
+                            Add Filter
+                        </md-tooltip>
+                        Add
+                    </md-button>
+                </div>
+            </md-whiteframe>
+            <md-table-container>
+                <table md-table>
+                    <md-progress-linear md-mode="indeterminate" ng-show="!wwstatus"></md-progress-linear>
+                    <thead md-head md-order="query.order">
+                        <tr md-row>
+                            <th md-column ng-repeat="column in autocolumn" md-order-by="{{column.name}}">
+                                <span>{{column.display}}</span>
+                            </th>
+                            <th md-column>
+                                <span>Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="row" md-select-id="name" md-auto-select ng-repeat="vim in datatable.data |filter : searchFish | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                            <td md-cell id='emp-user-id'>{{vim.user_id}}</td>
+                            <td md-cell id='emp-lastname'>{{vim.last_name}}</td>
+                            <td md-cell id='emp-firstname'>{{vim.first_name}}</td>
+                            <td md-cell id='emp-email'>{{vim.email}}</td>
+                            <td md-cell id='emp-phone'>+{{vim.phone}}</td>
+                <!--             <td md-cell>
+                            {{vim.role}}
+                         </td> -->
+                               <td md-cell>
+
+                                 <md-button id='emp-rest-passwd' class="md-icon-button md-primary" data-ng-click="resetpwd(vim.user_id)" aria-label="mode_edit">
+                                  <md-tooltip>
+                            Reset Password
+                        </md-tooltip>
+
+
+
+    <md-icon class="material-icons">restore</md-icon>
+                                </md-button>
+
+                                <md-button class="md-icon-button md-primary" id='emp-resore' data-ng-click="update_info(vim.user_id)" aria-label="mode_edit">
+                                  <md-tooltip>
+                            Edit
+                        </md-tooltip>
+                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" data-ng-click="view(vim.user_id)" id='emp-edit-mode' aria-label="visibility">
+                                  <md-tooltip>
+                            View
+                        </md-tooltip>
+                                    <md-icon class="material-icons">visibility</md-icon>
+                                </md-button>
+                         <!--        <md-button class="md-icon-button  md-warn" data-ng-click="delete(vim.user_id)" aria-label="delete_forever">
+                                  <md-tooltip>
+                            Delete
+                        </md-tooltip>
+                                    <md-icon class="material-icons">delete_forever</md-icon>
+                                </md-button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{datatable.data.length}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+        </md-content>
+    </md-card>
+</section>

@@ -1,0 +1,195 @@
+<style type="text/css">
+    .mdl-data-table th,td
+  {
+    text-align: left !important;
+  }
+</style>
+<section class="container-fluid with-maxwidth chapter">
+    <article class="article">
+        <div class="col-md-12 ">
+            <h2 class="article-title" style="padding-top:  30px;">
+                Reports
+            </h2>
+            <div class="col-md-12 nopad">
+                <form class="md-form-login form-validation" name="data_form" ng-submit="filterData()" novalidate="">
+                    <div class="col-md-4">
+                        <md-input-container class="md-block">
+                            <label>
+                                Employee
+                            </label>
+                            <md-select aria-label="select" ng-model="emp_id" required="">
+                                <md-option value="all">
+                                    All Employees
+                                </md-option>
+                                <md-option ng-repeat="user in  users" value="{{user.user_id}}">
+                                    {{user.last_name}} {{user.first_name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-5">
+                        <md-input-container class="md-block">
+                            <label>
+                                Period
+                            </label>
+                            <input date-range-picker="" name="name" ng-model="datePicker" required="" type="text">
+                            </input>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-button class="md-raised btn-w-md md-primary" type="submit">
+                            Filter
+                        </md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<!--
+        <button type="button" ng-csv="datatable.data" filename="test.csv">Export</button> -->
+        <div class="row nopad" ng-clock="">
+            <div class=" col-md-12 nopad">
+<!--
+                <h3 class="text-center" ng-if="data.visit_list.length == 0 || data.length == 0 " style="text-transform: uppercase;
+    margin-top: 18px;">
+                    No Reports to Show
+                </h3> -->
+<!--                 <table class="mdl-data-table tablefix" ng-if="data.visit_list.length > 0" style="width: 100%;    table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">
+                                Scheduled
+                            </th>
+                            <th class="mdl-data-table__cell--non-numeric" ng-if="emp_id == 'all'">
+                                Employee
+                            </th>
+                            <th class="mdl-data-table__cell--non-numeric">
+                                Customer
+                            </th>
+
+                            <th class="mdl-data-table__cell--non-numeric">
+                                Delivered
+                            </th>
+                            <th class="mdl-data-table__cell--non-numeric">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="val in data.visit_list">
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{val.task.schedule_date_time}}
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric" ng-if="emp_id == 'all'">
+
+
+                                <span ng-if="val.task.allocated_emp">
+                                    {{val.task.allocated_emp}}
+                                </span>
+
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <span ng-repeat="user in customers | filter:{'id':  val.task.cust_id}:true">
+                                    {{user.name }}
+                                </span>
+                            </td>
+
+
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{val.task.timestamps}}
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{val.task.status}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+ -->
+
+                       <md-content layout="column" flex>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+                <div class="md-toolbar-tools">
+
+                    <span flex></span>
+
+                    <md-button class="md-icon-button" ng-click="activefilter=!activefilter;showsearch = false">
+                        <md-tooltip>
+                            Filters
+                        </md-tooltip>
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="showsearch = !showsearch;activefilter = false">
+                        <md-tooltip>
+                            Search
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="showsearch" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <form class="flex">
+                        <md-input-container class="md-block" flex=100>
+                            <input ng-model="searchFish" placeholder="Search" class="searchmrg">
+                        </md-input-container>
+                    </form>
+                </div>
+            </md-toolbar>
+            <md-whiteframe layout="row" ng-repeat="single in multisearch" ng-show="activefilter">
+                <div class="md-toolbar-tools mrg1">
+                    <md-input-container flex=40>
+                        <label>Column</label>
+                        <md-select ng-model="single.column" ng-change="updateDataTable()">
+                            <md-optgroup label="Column">
+                                <md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block searchmrg" flex=40>
+                        <label>Search</label>
+                        <input ng-change="updateDataTable()" ng-model="single.ident">
+                    </md-input-container>
+                    <md-button type="button" class="md-raised right wid btn-w-md md-warn h40" ng-click="deleteRow(single.id)" ng-disabled="multisearch.length == 1">
+                        <md-tooltip>
+                            Remove Filter
+                        </md-tooltip>
+                        Remove
+                    </md-button>
+                    <md-button class="md-raised right wid btn-w-md md-primary h40" ng-click="addRow()">
+                        <md-tooltip>
+                            Add Filter
+                        </md-tooltip>
+                        Add
+                    </md-button>
+                </div>
+            </md-whiteframe>
+            <md-table-container>
+                <table md-table>
+                    <md-progress-linear md-mode="indeterminate" ng-show="!wwstatus"></md-progress-linear>
+                    <thead md-head md-order="query.order">
+                        <tr md-row>
+                            <th md-column ng-repeat="column in autocolumn" md-order-by="{{column.name}}">
+                                <span>{{column.display}}</span>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="row" md-select-id="name" md-auto-select ng-repeat="vim in datatable.data |filter : searchFish | orderBy: query.order ">
+                            <td md-cell>{{vim.schedule_date_time}}</td>
+                            <td md-cell>{{vim.allocated_emp}}</td>
+                            <td md-cell>{{vim.cust_name}}</td>
+                            <td md-cell>{{vim.timestamps}}</td>
+                            <td md-cell>{{vim.status}}</td>
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+
+        </md-content>
+            </div>
+        </div>
+    </article>
+</section>

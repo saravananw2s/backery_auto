@@ -1,0 +1,324 @@
+<section class="container-fluid with-maxwidth chapter">
+    <div class="box-body">
+        <div class="col-md-12 nopad" ng-show="showform">
+            <div class="right actionbtn">
+                <md-button type="button" ng-click="submit_form()" class="md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                <md-button type="button" ng-click="closeform()" class="md-raised btn-w-md md-primary">Close</md-button>
+            </div>
+        </div>
+        <div class="col-md-12 nopad" ng-hide="showform">
+            <div class="right addbtn">
+                <md-button class="md-raised btn-w-md md-accent" ng-click="addbtn()">Add {{title}}</md-button>
+            </div>
+        </div>
+    </div>
+    <article class="article" ng-show="showform">
+        <div class="box box-default">
+            <div class="box-body form-validation">
+                <form name="data_form" unsaved-warning-form class="md-form-login form-validation" novalidate>
+                
+
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> Order Date </label>
+                            <md-datepicker class="md-block" required ng-model="data.order_date" md-placeholder="Enter Order date"></md-datepicker>
+                        </md-input-container>
+                    </div>  
+
+                     <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Purchase Order Number </label>
+                            <input required type="text" ng-model="data.po_num" />
+                        </md-input-container>
+                    </div>
+               
+
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Customer </label>
+                            <md-select ng-model="data.cust_id" aria-label="select" required ng-change="CustomerChange()"> 
+                                <md-option ng-repeat="user in  customers" value="{{user.id}}"> {{user.name}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                
+                   
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Purchase Date </label>
+                            <md-datepicker class="md-block" required ng-model="data.po_date" md-placeholder="Enter  Purchase date"></md-datepicker>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Shipping Address </label>
+                            <input type="text" required ng-model="data.ship_to" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Billing Address </label>
+                            <input type="text" required ng-model="data.bil_to" />
+                        </md-input-container>
+                    </div>
+
+                     <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label> Quote Reference </label>
+                            <input required ng-model="data.quote_ref" type="text">
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Remarks</label>
+                            <input type="text" ng-model="data.remarks" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Order Taken by </label>
+                            <md-select ng-model="data.emp_id" aria-label="select" required>
+                                <md-option ng-repeat="user in  users" value="{{user.user_id}}"> {{user.last_name}} {{user.first_name}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                       <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Order Status </label>
+                            <md-select ng-model="data.status" aria-label="select" required>
+                                <md-option ng-repeat="st in order_status track by $index" value="{{$index}}"> {{st}} </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+   <div class="col-md-12 nopad" data-ng-repeat="cus_info in data.product_info track by $index">
+                        <div class="col-md-3">
+                            <md-input-container class="md-block">
+                                <label>Product </label>
+                                <md-select ng-model="cus_info.product_id" aria-label="select" required ng-change="productChange($index,cus_info.product_id)">
+                                    <md-option ng-repeat="cust in  product" value="{{cust.product_id}}"> {{cust.name}} </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-3">
+                            <md-input-container class="md-block">
+                                <label> Request Date</label>
+                                <md-datepicker class="md-block" required ng-model="cus_info.pro_req_date" md-placeholder="Enter Order date" required></md-datepicker>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-2">
+                            <md-input-container class="md-block">
+                                <label>Quantity </label>
+                                <input  string-to-number  ng-change="productChange($index,cus_info.product_id)" type="number"  min="1"ng-model="cus_info.pro_quantity" required>
+                            </md-input-container>
+                        </div>
+
+                           <div class="col-md-2">
+                            <md-input-container class="md-block">
+                                <label> Price </label>
+
+                                   <input step="0.01" string-to-number  disabled="" min="0" ng-model="cus_info.pro_price" required type="number">
+
+
+
+                       
+                            </md-input-container>
+                        </div>
+
+
+
+
+                        
+
+
+                        <div class="col-md-2">
+                            <md-button type="button" data-ng-click="removeChoice( $index)" class="md-raised btn-w-md md-primary">X</md-button>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <md-button type="button" data-ng-click="addNewChoice()" class="md-raised btn-w-md md-primary">Add Product</md-button>
+                    </div>
+                 
+
+
+
+                    <div class="col-md-4 totalLeft">
+                     <h5> Total Price  :  {{data.product_info | sumOfValue:'pro_price'}}</h5>
+                    </div>
+                 
+
+
+       
+
+
+                 
+
+                        <div class="col-md-12 nopad">
+                        <div class="col-lg-4 col-md-4 pad8" ng-repeat="file in data.files_info  track by $index">
+                            <md-card>
+                                <div class="md-media-lg card-media mdobj ">
+                                    <a download="{{file}}" href="{{file}}" title="File">
+                                        <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                    </a>
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+                                    <md-button ng-click="FileDelete($index)">Remove File </md-button>
+                                </md-card-actions>
+                            </md-card>
+                        </div>
+                    </div>
+                    <div class="col-md-12 nopad">
+                        <h5>{{title}} File Upload</h5>
+                    </div>
+                    <div class="col-md-12 nopad">
+                        <lf-ng-md-file-input lf-api="lfApi" name="files" lf-files="files" lf-maxcount="5" lf-filesize="10MB" lf-totalsize="20MB" multiple>
+                        </lf-ng-md-file-input>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <hr>
+                        <md-button type="button" data-ng-click="closeform()" class="md-raised right wid btn-w-md md-primary">Close</md-button>
+                        <md-button type="button" ng-click="submit_form()" class="right wid md-raised btn-w-md md-primary">{{ add ? 'Save' : 'Update' }}</md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+    <md-card>
+        <md-content layout="column" flex>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
+                <div class="md-toolbar-tools">
+                    <span>{{title}} Info </span>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="resettable()">
+                        <md-tooltip>
+                            Refresh
+                        </md-tooltip>
+                        <md-icon>refresh</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="activefilter=!activefilter;showsearch = false">
+                        <md-tooltip>
+                            Filters
+                        </md-tooltip>
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="showsearch = !showsearch;activefilter = false">
+                        <md-tooltip>
+                            Search
+                        </md-tooltip>
+                        <md-icon>search</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default" ng-show="showsearch" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <form class="flex">
+                        <md-input-container class="md-block" flex=100>
+                            <input ng-model="searchFish" placeholder="Search" class="searchmrg">
+                        </md-input-container>
+                    </form>
+                </div>
+            </md-toolbar>
+            <md-whiteframe layout="row" ng-repeat="single in multisearch" ng-show="activefilter">
+                <div class="md-toolbar-tools mrg1">
+                    <md-input-container flex=40>
+                        <label>Column</label>
+                        <md-select ng-model="single.column" ng-change="updateDataTable()">
+                            <md-optgroup label="Column">
+                                <md-option ng-value="column.name" ng-repeat="column in autocolumn">{{column.display}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block searchmrg" flex=40>
+                        <label>Search</label>
+                        <input ng-change="updateDataTable()" ng-model="single.ident">
+                    </md-input-container>
+                    <md-button type="button" class="md-raised right wid btn-w-md md-warn h40" ng-click="deleteRow(single.id)" ng-disabled="multisearch.length == 1">
+                        <md-tooltip>
+                            Remove Filter
+                        </md-tooltip>
+                        Remove
+                    </md-button>
+                    <md-button class="md-raised right wid btn-w-md md-primary h40" ng-click="addRow()">
+                        <md-tooltip>
+                            Add Filter
+                        </md-tooltip>
+                        Add
+                    </md-button>
+                </div>
+            </md-whiteframe>
+            <md-table-container>
+                <table md-table>
+                    <md-progress-linear md-mode="indeterminate" ng-show="!wwstatus"></md-progress-linear>
+                    <thead md-head md-order="query.order">
+                        <tr md-row>
+                            <th md-column ng-repeat="column in autocolumn" md-order-by="{{column.name}}">
+                                <span>{{column.display}}</span>
+                            </th>
+                           
+                            <th md-column>
+                                <span>Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="row" md-select-id="name" md-auto-select ng-repeat="vim in datatable.data |filter : searchFish | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                           
+                             <td md-cell>{{vim.order_booking_id}}</td>
+
+
+                            <td md-cell>
+
+                            {{vim.takenby}}
+
+
+                            </td>
+
+
+                            <td md-cell>{{vim.order_date}}</td>
+                            <td md-cell>{{vim.po_date}}</td>
+
+
+                            <td md-cell>
+                
+                                {{vim.customer}}
+
+
+                            </td>
+                            
+
+
+                            <td md-cell>
+                                <md-button class="md-icon-button md-primary" data-ng-click="update_info(vim.order_booking_id)" aria-label="mode_edit">
+                                    <md-tooltip>
+                                        Edit
+                                    </md-tooltip>
+                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button" data-ng-click="view(vim.order_booking_id)" aria-label="visibility">
+                                    <md-tooltip>
+                                        View
+                                    </md-tooltip>
+                                    <md-icon class="material-icons">visibility</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button  md-warn" data-ng-click="delete(vim.order_booking_id)" aria-label="delete_forever">
+                                    <md-tooltip>
+                                        Delete
+                                    </md-tooltip>
+                                    <md-icon class="material-icons">delete_forever</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{datatable.data.length}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks"></md-table-pagination>
+        </md-content>
+    </md-card>
+</section>

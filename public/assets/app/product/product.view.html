@@ -1,0 +1,77 @@
+<section class="container-fluid pad10">
+    <article class="article" ng-show="hide">
+        <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card md-theme-watch>
+                <h3 class="text-center">{{msg}}</h3>
+            </md-card>
+        </div>
+    </article>
+    <article class="article mrg1" ng-hide="hide">
+        <md-toolbar class="backhead">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" onclick="globalapp.back()">
+                    <md-tooltip>
+                        Go Back
+                    </md-tooltip>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <h2 class="cauto">{{title}}</h2>
+                <md-button class="md-icon-button" ng-click="edit()">
+                    <md-tooltip>
+                        Edit {{title}}
+                    </md-tooltip>
+                    <md-icon>mode_edit</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete()">
+                    <md-tooltip>
+                        Delete {{title}}
+                    </md-tooltip>
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding class="overfl" md-whiteframe="2">
+            <div class="row">
+                <div class="col-md-6" ng-if="complete">
+                    <p ng-bind-html="view(data.product_id,'Product ID')"></p>
+                    <p ng-bind-html="view(data.name,'Name')"></p>
+                    <p ng-bind-html="view(data.price,'Price')"></p>
+                         <p ng-bind-html="view(data.unit,'Unit')"></p>
+                </div>
+                <div class="col-md-6" ng-if="complete">
+               
+                    <p ng-bind-html="view(data.quantity,'Quantity')"></p>
+                    <p ng-bind-html="view(data.desc,'Desc')"></p>
+                    <p ng-bind-html="view(data.category,'Category')"></p>
+                </div>
+                <div class="col-md-12" ng-show="doc">
+                    <hr>
+                    <h5>Images</h5>
+                    <div class="col-lg-4 col-md-4" ng-repeat="file in data.photos  track by $index">
+                        <md-card>
+                            <div class="md-media-lg card-media mdobj ">
+                                <a download="{{file}}" href="{{file}}" title="File">
+                                    <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                </a>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="doc">
+                    <hr>
+                    <h5>Documents</h5>
+                    <div class="col-lg-4 col-md-4" ng-repeat="file in data.doc_info  track by $index">
+                        <md-card>
+                            <div class="md-media-lg card-media mdobj ">
+                                <a download="{{file}}" href="{{file}}" title="File">
+                                    <img alt="File" style="width: 100%;height: 100%;" ng-src="{{file}}" onerror="globalapp.imgerror(this,event)">
+                                </a>
+                            </div>
+                        </md-card>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+        </div>
+    </article>
+</section>

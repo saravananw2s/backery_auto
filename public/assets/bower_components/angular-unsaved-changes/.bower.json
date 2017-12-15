@@ -1,0 +1,35 @@
+{
+  "name": "angular-unsaved-changes",
+  "description": "unsaved changes",
+  "version": "0.0.7",
+  "authors": [
+    "Tushar Borole <tushariscoolster@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tushariscoolster/angular-unsaved-changes"
+  },
+  "homepage": "http://tushariscoolster.github.io/angular-unsaved-changes/",
+  "license": "LGPL-2.1",
+  "main": "angular-unsaved-changes.js",
+  "keywords": [
+    "angular-unsaved-changes",
+    "angular"
+  ],
+  "ignore": [
+    "gh-pages",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {},
+  "_release": "0.0.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.7",
+    "commit": "a0220039c8f660a24c208bbc439a2d3173648e42"
+  },
+  "_source": "https://github.com/tushariscoolster/angular-unsaved-changes.git",
+  "_target": "^0.0.7",
+  "_originalSource": "angular-unsaved-changes",
+  "_direct": true
+}

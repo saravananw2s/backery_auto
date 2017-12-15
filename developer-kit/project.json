@@ -1,0 +1,73 @@
+----------------------------
+QualityCertificate:-
+ProductStatistics:-
+CustomerStatistics:-
+-----------------------------
+travel 
+leave 
+visit report as report
+total expence calcualtion
+Travel history with timings
+Capture the times in fil
+Pull up and view report
+Schedule task calendar if need
+-----------------------
+
+-----------------------
+
+activate on
+file same name laravel issue with config
+last login during api token validation
+json validation
+deactive mode
+double login
+travel expense calculation
+--------------------------
+
+sudo ssh -i Salescrmw2s.pem ubuntu@35.154.5.174
+
+drop database sfa_database
+
+php artisan optimize –force and php artisan config:cache
+
+sudo apt-get install php-bcmath php-mbstring php-xml php-zip php-gd php-mysql
+
+sudo chgrp -R www-data storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache
+
+ REDSMIN_KEY=588f179412e303fc0377110b redsmin
+
+
+apt-get install libcss-minifier-xs-perl libjavascript-minifier-xs-perl libhtml-packer-perl
+
+
+cd sfa &&  sudo php artisan serve --host=0.0.0.0 --port=80
+
+
+/home/ubuntu/spa/storage/logs
+
+
+printf '\033\143'
+
+APP_ENV=local
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+SUB_DB_FILE=/home/sk-w2s/kalidass/spa/db-s/struct.sql
+DB_FILE=/home/sk-w2s/kalidass/spa/db-s/db.sql
+
+
+APP_ENV=local
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+SUB_DB_FILE=/var/www/sfa/db-s/sub_domain.sql
+DB_FILE=/var/www/sfa/db-s/super_admin_db.sql
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+BROADCAST_DRIVER=redis
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+QUEUE_DRIVER=redis
+
+
