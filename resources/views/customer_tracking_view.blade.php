@@ -256,9 +256,9 @@ ul.rating {
  " ng-src="{{driver_image}}" class="md-avatar" />
 
 
-                        <span style="    font-size: 25px;color: #00316b;">Kalidass </span>
+                        <span style="    font-size: 25px;color: #00316b;">{{orderInfo.emp_info.first_name}} {{orderInfo.emp_info.last_name}} </span>
 
-                    <span style="    font-size: 15px;color: #00316b;">  (+91 9524609638)   </span>
+                    <span style="    font-size: 15px;color: #00316b;"> {{orderInfo.emp_info.phone}}   </span>
 
                         <div style="    display: inline-block;
 
