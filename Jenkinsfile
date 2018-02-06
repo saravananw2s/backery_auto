@@ -12,9 +12,7 @@ node('master') {
 
         stage('test') {
              sh "echo 'Running Test'"
-             sh "php artisan serve &"
-             sh "php artisan dusk"
-
+             sh "php artisan serve"
         }
 
         stage('deploy') {
