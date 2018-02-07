@@ -6,8 +6,7 @@ node('master') {
             checkout scm
             sh "echo 'ENV SETUP'"
             sh "composer install"
-            sh "cp .env.example .env"
-            sh "php artisan key:generate"
+         
         }
 
         stage('test') {
