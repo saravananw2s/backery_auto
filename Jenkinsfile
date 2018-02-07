@@ -10,7 +10,7 @@ node('master') {
         }
 
         stage('test') {
-             sh "echo 'Running Test'"
+             sh "echo 'Running Test Env'"
              sh "php artisan serve"
         }
 
