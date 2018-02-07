@@ -6,12 +6,15 @@ node('master') {
             checkout scm
             sh "echo 'ENV SETUP'"
             sh "composer install"
-         
+            sh "cp .env.example .env"
+            sh "php artisan key:generate"
         }
 
         stage('test') {
-             sh "echo 'Running Test Env'"
-             sh "php artisan serve"
+             sh "echo 'Running Test'"
+             sh "php artisan serve &"
+             sh "php artisan dusk"
+
         }
 
         stage('deploy') {
